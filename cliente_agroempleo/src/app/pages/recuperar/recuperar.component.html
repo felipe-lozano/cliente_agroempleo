@@ -1,0 +1,27 @@
+<body>
+<form (ngSubmit)="onSubmit()" class="login-form">
+    <h2>Recuperación de cuenta</h2>
+  
+    <div class="input-group">
+      <label for="email">Correo electrónico</label>
+      <input
+        type="email"
+        id="email"
+        name="email"
+        placeholder="Introduce tu correo"
+        [(ngModel)]="email"
+        required
+      />
+    </div>
+  
+    <div class="extra-links">
+      <p>Te enviaremos un enlace para restablecer tu contraseña.</p>
+    </div>
+  
+    <button type="submit" class="login-btn">Enviar enlace de recuperación</button>
+  
+    <div class="register-link">
+      <p><a routerLink="/login">Volver al inicio de sesión</a></p>
+    </div>
+  </form>
+  

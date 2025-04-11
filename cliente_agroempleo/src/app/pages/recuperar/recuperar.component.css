@@ -31,7 +31,7 @@ body {
 }
 
 .input-group {
-    margin-bottom: 1rem;
+    margin-bottom: 5px ;
 }
 
 label {
@@ -41,7 +41,6 @@ label {
 }
 
 input[type="email"],
-input[type="password"],
 input[type="text"] {
     width: 100%; /* Asegura que los campos ocupen todo el ancho del contenedor */
     padding: 0.5rem;
@@ -55,61 +54,7 @@ input[type="text"] {
     box-sizing: border-box; /* Asegura que el padding no afecte el ancho */
 }
 
-/* Mantener el estilo del campo al mostrar u ocultar la contraseña */
-input[type="password"].show-password,
-input[type="text"].show-password {
-    border: 1px solid #eea913; /* Reafirma el borde */
-    background-color: #2b2b2b; /* Reafirma el fondo */
-    color: #ffffff; /* Reafirma el color de texto */
-    -webkit-text-security: none; /* Permite mostrar el texto sin estilo de campo */
-}
 
-/* Estilo de enfoque */
-input[type="email"]:focus,
-input[type="password"]:focus,
-input[type="text"]:focus {
-    border-color: #eea913; /* Borde verde más claro al enfocar */
-}
-
-.password-group {
-    position: relative;
-}
-
-.eye-icon {
-    position: absolute;
-    right: 10px; /* Ajusta según sea necesario */
-    top: 50%;
-    transform: translateY(-50%);
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 0;
-}
-
-.eye-icon i {
-    color: #ffffff; /* Color del ícono */
-    font-size: 1.2rem;
-}
-.eye-icon i:hover{
-    color: #eea913;
-}
-.checkbox-group {
-    margin-bottom: 1rem;
-    color: #e0e0e0; /* Texto en los checkbox */
-}
-
-.forgot-password {
-    display: block;
-    text-align: right;
-    margin-bottom: 1rem;
-    color: #eea913; /* Link verde claro */
-    text-decoration: none;
-}
-
-.forgot-password:hover {
-    text-decoration: underline;
-    color: #ac780a; /* Hover verde más claro */
-}
 
 .login-btn {
     width: 100%;
@@ -122,7 +67,11 @@ input[type="text"]:focus {
     cursor: pointer;
     transition: background-color 0.3s ease-in-out;
 }
-
+.extra-links  {
+    color: #ffffff; /* Enlace verde claro */
+    text-decoration: none;
+    margin-bottom: 5px;
+}
 .login-btn:hover {
     background-color: #eea913; /* Verde más oscuro al pasar */
 }

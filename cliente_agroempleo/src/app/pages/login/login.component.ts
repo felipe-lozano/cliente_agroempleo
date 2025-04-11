@@ -1,45 +1,46 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatCardModule } from '@angular/material/card';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import {Router} from '@angular/router';
+import { UserHeaderComponent } from '../components/user-header/user-header.component';
+import { FormsModule } from '@angular/forms';
+import { RouterModule, Routes } from '@angular/router';
+import { RecuperarComponent } from '../recuperar/recuperar.component';
+
+const routes: Routes = [
+  { path: 'recuperar', component: RecuperarComponent },
+  // otras rutas
+];
+
 
 @Component({
   selector: 'app-login',
-  imports: [
-    CommonModule,
-    MatCardModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule,
-    MatIconModule
-  ],
+   imports: [
+      CommonModule,
+      UserHeaderComponent,
+      FormsModule,
+      RouterModule
+    ],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  styleUrls: ['./login.component.css'],
 })
 export class LoginComponent {
-  constructor(private router: Router) {} //
+  email = '';
+  password = '';
+  rememberMe = false;
+  showPassword = false;
 
+  togglePassword() {
+    this.showPassword = !this.showPassword;
+  }
 
-  hidePassword = true;
-
- goToRegister () {
-  console.log('boton de registro clickeado');
-  this.router.navigate(['/register']); // redirecciona a la pagina de registro
- }
-  login(){
-    alert('iniciando sesion...');
-
+  onSubmit() {
+    // Aquí puedes llamar a un servicio o manejar el login
+    console.log({
+      email: this.email,
+      password: this.password,
+      rememberMe: this.rememberMe,
+    });
   }
   recoverPassword(){
     alert('recuperando contraseña...');
   }
-
-  createAccount(){
-    alert('creando cuenta...');
-  }
-
 }

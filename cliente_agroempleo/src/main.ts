@@ -7,7 +7,8 @@ import { provideHttpClient } from '@angular/common/http';
 import { RegisterComponent } from './app/pages/register/register.component';
 import { HomeComponent } from './app/pages/home/home.component';
 import { RecuperarComponent } from './app/pages/recuperar/recuperar.component';
-
+import { BibliotecaComponent } from './app/pages/biblioteca/biblioteca.component';
+import { JobBoardComponent } from './app/pages/job-board/job-board.component';
 bootstrapApplication(AppComponent,{
     providers:[
         provideRouter([
@@ -22,7 +23,10 @@ bootstrapApplication(AppComponent,{
             },
             { path: 'register',component: RegisterComponent},
             { path: 'home', component: HomeComponent},
-            {path: 'recuperar', component: RecuperarComponent}
+            {path: 'recuperar', component: RecuperarComponent},
+            {path: 'biblioteca', component: BibliotecaComponent},
+            {path: 'job', component: JobBoardComponent}
+
            
 
   

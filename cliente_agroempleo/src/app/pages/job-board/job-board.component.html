@@ -1,0 +1,76 @@
+<div class="job-board-wrapper">
+
+    <!-- Encabezado superior -->
+    <header class="job-header">
+      <img src="assets/logo.svg" alt="Logo Agroempleo" class="logo">
+      <nav class="top-nav">
+        <a href="#">Encontrar Trabajo</a>
+        <a href="#">Reseña de la Empresa</a>
+        <a href="#">Encontrar Salarios</a>
+      </nav>
+      <div class="user-profile">
+        <span class="user-name">Luis Lopez</span>
+        <img src="assets/user.png" alt="Usuario" class="avatar">
+      </div>
+    </header>
+  
+    <main class="job-main">
+  
+      <!-- Filtro lateral -->
+      <aside class="job-sidebar">
+        <h3>Crear Alerta de Empleo</h3>
+        <input type="text" placeholder="Palabra clave" />
+        <button class="btn-alert">Crear Alerta</button>
+  
+        <div class="filter-group">
+          <h4>Tipo de Empleo</h4>
+          <label><input type="checkbox" checked> Tiempo Completo</label>
+          <label><input type="checkbox"> Medio Tiempo</label>
+          <label><input type="checkbox"> Remoto</label>
+          <label><input type="checkbox"> Prácticas</label>
+        </div>
+  
+        <div class="filter-group">
+          <h4>Nivel de Senioridad</h4>
+          <label><input type="checkbox" checked> Medio</label>
+          <label><input type="checkbox"> Senior</label>
+          <label><input type="checkbox"> Estudiantil</label>
+          <label><input type="checkbox"> Director</label>
+        </div>
+      </aside>
+  
+      <!-- Contenido principal de empleos -->
+      <section class="job-results">
+        <div class="results-header">
+          <h2>Mostrando {{ jobs.length }} empleos</h2>
+          <input type="text" placeholder="Buscar Empleo" />
+        </div>
+  
+        <div class="job-cards">
+          <div class="job-card" *ngFor="let job of jobs">
+            <div class="card-header">
+              <img [src]="job.logo" alt="Logo Empresa" class="job-logo" />
+              <div class="job-info">
+                <h3>{{ job.title }}</h3>
+                <p>{{ job.description }}</p>
+              </div>
+              <div class="job-menu">⋮</div>
+            </div>
+  
+            <div class="card-footer">
+              <div class="tags">
+                <span *ngFor="let tag of job.tags">{{ tag }}</span>
+              </div>
+              <div class="actions">
+                <button class="btn-apply">Aplicar Ahora</button>
+                <button class="btn-msg">Mensajes</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+  
+    </main>
+  
+  </div>
+  

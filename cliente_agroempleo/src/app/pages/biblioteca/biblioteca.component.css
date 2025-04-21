@@ -1,0 +1,16 @@
+.apply-button {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 0.7rem 1.2rem;
+    margin-top: 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+  }
+  
+  .apply-button:hover {
+    background-color: #218838;
+  }
+  

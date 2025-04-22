@@ -1,0 +1,92 @@
+/* ===========================
+   LAYOUT GLOBAL PARA STICKY FOOTER
+=========================== */
+/* Aseguramos que html y body ocupen todo el alto y sean un contenedor flex */
+html, body {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* Este contenedor envuelve todo el contenido antes del footer */
+  .main-content {
+    flex: 1;           /* Se estira para empujar el footer abajo */
+    position: relative;
+  }
+  
+  /* ===========================
+     TU CSS DEL FOOTER ADAPTADO
+  =========================== */
+  .footer {
+      background-color: #333;
+      color: #fff;
+      padding: 20px 0;
+      text-align: center;
+      width: 100%;      /* Abarca todo el ancho */
+      /* margin-top: auto;  ya no es necesario porque usamos flex */
+  }
+  
+  .footer-content {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 20px;
+  }
+  
+  .footer-links {
+      list-style: none;
+      padding: 0;
+      margin: 10px 0 0;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+  }
+  
+  .footer-links li {
+      display: inline;
+  }
+  
+  .footer-links a {
+      color: #66aaff;
+      text-decoration: none;
+      transition: color 0.3s;
+  }
+  
+  .footer-links a:hover {
+      color: #5599dd;
+  }
+  
+  /* ===========================
+     SCROLL INDICATOR (si lo necesitas)
+  =========================== */
+  .scroll-indicator {
+      position: absolute;
+      left: 50%;
+      bottom: 20px;
+      transform: translateX(-50%);
+      font-size: 4em;
+      color: #FFFFFF;
+      animation: bounce 1.5s infinite;
+  }
+  
+  .scroll-indicator .arrow-down {
+      display: inline-block;
+      width: 0;
+      height: 0;
+      border-left: 15px solid transparent;
+      border-right: 15px solid transparent;
+      border-top: 25px solid #FFFFFF;
+  }
+  
+  @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% {
+          transform: translateY(0);
+      }
+      40% {
+          transform: translateY(-10px);
+      }
+      60% {
+          transform: translateY(-5px);
+      }
+  }
+  

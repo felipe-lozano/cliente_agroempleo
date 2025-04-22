@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { UserHeaderComponent } from '../components/user-header/user-header.component';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
@@ -12,7 +11,7 @@ import { RouterModule } from '@angular/router';
     FormsModule,
     RouterModule,
     CommonModule,
-    UserHeaderComponent
+    
   ],
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css']

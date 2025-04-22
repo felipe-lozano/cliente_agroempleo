@@ -1,0 +1,167 @@
+/* ===========================
+   RESET BÁSICO
+   Elimina márgenes y padding por defecto
+   =========================== */
+   * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  /* ===========================
+     ESTILOS GENERALES DEL BODY
+     Define fuente, color de fondo y espacio superior
+     para que el contenido no quede oculto bajo el header
+     =========================== */
+  body {
+    font-family: Arial, sans-serif;    /* Fuente principal */
+    background-color: #f8fafc;         /* Color de fondo suave */
+    padding-top: 60px;                 /* Altura del header fijo */
+  }
+  
+  /* ===========================
+     HEADER FIJO
+     Posiciona el header siempre visible en la parte superior
+     =========================== */
+  header {
+    position: fixed;                   /* Se fija al viewport */
+    top: 0;                            /* Arriba */
+    left: 0;                           /* A la izquierda */
+    right: 0;                          /* A la derecha */
+    background-color: white;           /* Fondo blanco */
+    border-bottom: 1px solid #ddd;     /* Línea inferior */
+    z-index: 1000;                     /* Delante de otros elementos */
+    height: 60px;                      /* Altura fija */
+  }
+  
+  /* ===========================
+     CONTENEDOR INTERNO
+     Centra y alinea el contenido del header
+     =========================== */
+  .wrap-container {
+    max-width: 1200px;                 /* Ancho máximo */
+    margin: 0 auto;                    /* Centrado horizontal */
+    height: 100%;                      /* Ocupa toda la altura del header */
+    display: flex;                     /* Flexbox para alineación */
+    justify-content: space-between;    /* Espacio entre branding y menú */
+    align-items: center;               /* Centrado vertical */
+    padding: 0 1rem;                   /* Espacio lateral */
+  }
+  
+  /* ===========================
+     BRANDING (Logo + Texto)
+     =========================== */
+  .branding {
+    display: flex;                     /* Flex para alinear logo+texto */
+    align-items: center;               /* Centrado vertical */
+    gap: 0.5rem;                       /* Espacio entre elementos */
+  }
+  
+  .logo-lg {
+    height: 32px;                      /* Altura fija del logo */
+  }
+  
+  .branding-text {
+    font-weight: bold;                 /* Texto en negrita */
+    color: #080808;                    /* Color primario */
+    font-size: 1.2rem;                 /* Tamaño de fuente */
+  }
+  
+  /* ===========================
+     MENÚ DE NAVEGACIÓN (Escritorio)
+     =========================== */
+  .menu {
+    display: flex;                     /* Flex para alinear elementos */
+    align-items: center;               /* Centrado vertical */
+  }
+  
+  .listMenu {
+    list-style: none;                  /* Quitar viñetas */
+    display: flex;                     /* Horizontal */
+    gap: 1.5rem;                       /* Espacio entre items */
+  }
+  
+  .listMenu li a {
+    text-decoration: none;             /* Sin subrayado */
+    color: #333;                       /* Color del texto */
+    font-size: 1rem;                   /* Tamaño de fuente */
+    transition: color 0.2s;            /* Transición suave al hover */
+  }
+  
+  .listMenu li a:hover {
+    color: #2563eb;                    /* Color al pasar el cursor */
+  }
+  
+  /* ===========================
+     BOTÓN MENÚ MÓVIL (Hamburguesa)
+     Inicialmente oculto en escritorio
+     =========================== */
+  .mobileMenuButton {
+    display: none;                     /* No se muestra en desktop */
+    background: none;                  /* Sin fondo */
+    border: none;                      /* Sin borde */
+    cursor: pointer;                   /* Cursor pointer */
+  }
+  
+  .mobileMenuButton span {
+    display: block;                    /* Mostrar barras */
+    width: 24px;                       /* Ancho de cada barra */
+    height: 2px;                       /* Grosor de la barra */
+    background-color: #333;            /* Color de la barra */
+    position: relative;                /* Para posicionar pseudoelementos */
+  }
+  
+  .mobileMenuButton span::before,
+  .mobileMenuButton span::after {
+    content: "";                       /* Barras adicionales */
+    position: absolute;                /* Posicionamiento absoluto */
+    width: 24px;
+    height: 2px;
+    background-color: #333;
+    left: 0;
+  }
+  
+  .mobileMenuButton span::before {
+    top: -6px;                         /* Barra superior */
+  }
+  
+  .mobileMenuButton span::after {
+    top: 6px;                          /* Barra inferior */
+  }
+  
+  /* ===========================
+     ESTILOS RESPONSIVE (≤768px)
+     - Oculta menú de escritorio
+     - Muestra botón hamburguesa
+     - Estilo del menú desplegable
+     =========================== */
+  @media (max-width: 768px) {
+    /* Ocultar menú horizontal */
+    .listMenu {
+      display: none;                   /* Oculto por defecto */
+      position: absolute;              /* Desplegable encima del contenido */
+      top: 60px;                       /* Bajo el header */
+      right: 1rem;                     /* A la derecha */
+      background-color: white;         /* Fondo blanco */
+      flex-direction: column;          /* Vertical */
+      padding: 1rem;                   /* Espacio interior */
+      border: 1px solid #ddd;          /* Borde suave */
+    }
+  
+    /* Mostrar menú cuando tenga la clase .open */
+    .listMenu.open {
+      display: flex;
+    }
+  
+    /* Mostrar botón hamburguesa */
+    .mobileMenuButton {
+      display: block;
+    }
+  
+    /* Ajuste de padding y tamaño de fuente en móviles */
+    .listMenu li a {
+      padding: 0.5rem 0;
+      font-size: 1rem;
+    }
+  }
+  

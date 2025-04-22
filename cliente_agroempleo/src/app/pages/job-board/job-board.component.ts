@@ -1,17 +1,24 @@
 
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 
 @Component({
   selector: 'app-job-board',
   imports: [
-    CommonModule
+    CommonModule,
+    FormsModule
   ],
   templateUrl: './job-board.component.html',
   styleUrls: ['./job-board.component.css']
 })
 export class JobBoardComponent {
+
+    
+
+
+ 
   jobs = [
     {
       title: 'Diseñador UI / UX',

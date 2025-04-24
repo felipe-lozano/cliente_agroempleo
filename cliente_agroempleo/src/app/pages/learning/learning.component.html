@@ -1,0 +1,49 @@
+<mat-toolbar color="primary" class="toolbar">
+    <img src="logo.png" alt="Logo" class="logo" />
+    <span class="app-name">Learning</span>
+    <span class="spacer"></span>
+    <span class="usuario">{{ usuario }}</span>
+  </mat-toolbar>
+  
+  <mat-sidenav-container class="sidenav-container">
+    <mat-sidenav mode="side" opened class="sidenav">
+      <mat-nav-list>
+        <mat-list-item>Inicio</mat-list-item>
+        <mat-list-item>Mi trayectoria profesional</mat-list-item>
+        <mat-list-item>Mi biblioteca</mat-list-item>
+        <mat-list-item>Contenido</mat-list-item>
+        <mat-list-item>Certificaciones</mat-list-item>
+      </mat-nav-list>
+    </mat-sidenav>
+  
+    <mat-sidenav-content>
+      <div class="welcome-section">
+        <h1>{{ usuario }}, mejora tus aptitudes y avanza en tu carrera con Agroempleo Learning</h1>
+      </div>
+  
+      <div class="selection-buttons">
+        <button mat-raised-button class="filter-button">Cursos</button>
+        <button mat-raised-button class="filter-button">Nivel</button>
+        <button mat-raised-button class="filter-button">Tiempo para Finalizar</button>
+        <button mat-raised-button class="filter-button">Filtros</button>
+        <button mat-raised-button class="filter-button">Favoritos</button>
+      </div>
+  
+      <div class="course-recommendations">
+        <h2>Principales recomendaciones para {{ usuario }}</h2>
+        <mat-card *ngFor="let curso of recomendaciones" class="course-card">
+          <mat-card-title>{{ curso.titulo }}</mat-card-title>
+          <mat-card-subtitle>Por: {{ curso.autor }}</mat-card-subtitle>
+          <p>Duración: {{ curso.duracion }}</p>
+        </mat-card>
+      </div>
+  
+      <div class="skills-section">
+        <h3>Identifica las aptitudes necesarias para avanzar en tu carrera</h3>
+        <mat-form-field appearance="outline" class="skills-input">
+          <input matInput placeholder="Gerente de productos">
+        </mat-form-field>
+      </div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+  

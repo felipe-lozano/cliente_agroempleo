@@ -1,0 +1,82 @@
+.spacer {
+    flex: 1 1 auto;
+  }
+  
+  .toolbar {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+  }
+  .logo {
+    height: 32px;
+    margin-right: 8px;
+    vertical-align: middle;
+  }
+  
+  .app-name {
+    font-weight: bold;
+    margin-left: 8px;
+  }
+  
+  .usuario {
+    font-weight: 500;
+    margin-right: 12px;
+  }
+  
+  .sidenav-container {
+    height: 100vh;
+  }
+  
+  .sidenav {
+    width: 250px;
+    background-color: #f8f8f8;
+  }
+  
+  .selection-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: start;
+    gap: 10px;
+    padding: 10px 20px;
+    background-color: #f5f5f5;
+    position: sticky;
+    top: 64px;
+    z-index: 999;
+    border-bottom: 1px solid #ccc;
+  }
+  
+  .filter-button {
+    background-color: #e0e0e0;
+    font-weight: 600;
+    min-width: 120px;
+  }
+  
+  .filter-button:hover {
+    background-color: #d5d5d5;
+  }
+  
+  .welcome-section {
+    padding: 20px;
+    background-color: #e3f2fd;
+    text-align: center;
+  }
+  
+  .course-recommendations {
+    padding: 20px;
+  }
+  
+  .course-card {
+    margin-bottom: 15px;
+    padding: 10px;
+  }
+  
+  .skills-section {
+    padding: 20px;
+    background-color: #d0f0d0;
+  }
+  
+  .skills-input {
+    width: 100%;
+    max-width: 400px;
+  }
+  

@@ -1,4 +1,4 @@
-
+<!-- 
 <header>
   <div class="wrap-container">
     <div class="branding">
@@ -19,7 +19,7 @@
       </button>
     </nav>
   </div>
-</header>
+</header> -->
 <body>
 
   <div class="job-board-wrapper">
@@ -39,63 +39,118 @@
     </header>
   
     <main class="job-main">
-  
-      <!-- Filtro lateral -->
-      <aside class="job-sidebar">
-
-        <div class="filter-group">
-          <label for="jobType">Tipo de Empleo:</label>
-          <select id="jobType" name="jobType" [(ngModel)]="selectedJobType" required>
-            <option value="">Seleccione</option>
-            <option value="full-time">Tiempo Completo</option>
-            <option value="part-time">Medio Tiempo</option>
-            <option value="remote">Remoto</option>
-            <option value="internship">Prácticas</option>
-          </select>
-        </div>
-        <div class="filter-group">
-          <label for="jobType">Nivel de Señioridad:</label>
-          <select id="jobType" name="jobType" [(ngModel)]="selectedJobType2" required>
-            <option value="">Seleccione</option>
-            <option value="full-time">Medio</option>
-            <option value="part-time">señior</option>
-            <option value="remote">Estudiante</option>
-            <option value="internship">Director</option>
-          </select>
-        </div>
-      </aside>
-  
-      <!-- Contenido principal de empleos -->
-      <section class="job-results">
-        <div class="results-header">
-          <h2>Mostrando {{ jobs.length }} empleos</h2>
-          <input type="text" placeholder="Buscar Empleo" />
-        </div>
-  
-        <div class="job-cards">
-          <div class="job-card" *ngFor="let job of jobs">
-            <div class="card-header">
-              <img [src]="job.logo" alt="Logo Empresa" class="job-logo" />
-              <div class="job-info">
-                <h3>{{ job.title }}</h3>
-                <p>{{ job.description }}</p>
-              </div>
-              <div class="job-menu">⋮</div>
-            </div>
-  
-            <div class="card-footer">
-              <div class="tags">
-                <span *ngFor="let tag of job.tags">{{ tag }}</span>
-              </div>
-              <div class="actions">
-                <button class="btn-apply">Aplicar Ahora</button>
-                <button class="btn-msg">Mensajes</button>
-              </div>
-            </div>
+      <div class="layout-container">
+        <!-- Sidebar de filtros -->
+        <aside class="job-sidebar">
+          <div class="filter-group">
+            <label for="jobType">Tipo de Empleo:</label>
+            <select id="jobType" [(ngModel)]="selectedJobType">
+              <option value="">Seleccione</option>
+              <option *ngFor="let tipo of tiposEmpleo" [value]="tipo">{{ tipo }}</option>
+            </select>
           </div>
-        </div>
-      </section>
-  
+      
+          <div class="filter-group">
+            <label for="experiencia">Experiencia:</label>
+            <select id="experiencia" [(ngModel)]="selectedExperiencia">
+              <option value="">Seleccione</option>
+              <option *ngFor="let exp of experiencias" [value]="exp">{{ exp }}</option>
+            </select>
+          </div>
+      
+          <div class="filter-group">
+            <label for="jornada">Jornada:</label>
+            <select id="jornada" [(ngModel)]="selectedJornada">
+              <option value="">Seleccione</option>
+              <option *ngFor="let j of jornadas" [value]="j">{{ j }}</option>
+            </select>
+          </div>
+      
+          <div class="filter-group">
+            <label for="tipoContrato">Tipo de Contrato:</label>
+            <select id="tipoContrato" [(ngModel)]="selectedContrato">
+              <option value="">Seleccione</option>
+              <option *ngFor="let tipo of tiposContrato" [value]="tipo">{{ tipo }}</option>
+            </select>
+          </div>
+      
+          <div class="filter-group buttons">
+            <button (click)="aplicarFiltros()">Aplicar filtros</button>
+            <button type="button" (click)="limpiarFiltros()">Limpiar</button>
+          </div>
+        </aside>
+      
+        <!-- Contenido principal de empleos -->
+        <section class="job-results">
+          <!-- <div class="results-header">
+            <h2>Mostrando {{ jobs.length }} empleos</h2>
+            <input type="text" placeholder="Buscar Empleo" />
+          </div> -->
+          <mat-card-content>
+            <p>Bienvenido al Panel de administración. Aqui pueden ver los datos en una tabla</p>
+            <button mat-reised-button color="primary" (click)="consultarDatos()">Consultar</button>
+            
+          
+
+            <table mat-table [dataSource]="datafilter" class="mat-elevation-z8">
+
+                <ng-container matColumnDef="Id">
+                    <th mat-header-cell *matHeaderCellDef>ID</th>
+                    <td mat-cell *matCellDef="let element">{{element.id}}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="Nombre">
+                    <th mat-header-cell *matHeaderCellDef>Nombre</th>
+                    <td mat-cell *matCellDef="let element">{{element.name}}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="Correo">
+                    <th mat-header-cell *matHeaderCellDef>correo</th>
+                    <td mat-cell *matCellDef="let element">{{element.email}}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="Telefono">
+                    <th mat-header-cell *matHeaderCellDef>Telefono</th>
+                    <td mat-cell *matCellDef="let element">{{element.phone}}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="Website">
+                    <th mat-header-cell *matHeaderCellDef>Website</th>
+                    <td mat-cell *matCellDef="let element">{{element.website}}</td>
+                </ng-container>
+              
+               
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row;columns: displayedColumns;"></tr>
+            </table>
+
+        </mat-card-content>
+          <!-- <div class="job-cards">
+            <div class="job-card" *ngFor="let job of jobs">
+              <div class="card-header">
+                <img [src]="job.logo" alt="Logo Empresa" class="job-logo" />
+                <div class="job-info">
+                  <h3>{{ job.title }}</h3>
+                  <p>{{ job.description }}</p>
+                </div>
+                <div class="job-menu">⋮</div>
+              </div> -->
+      
+              <!-- <div class="card-footer">
+                <div class="tags">
+                  <span *ngFor="let tag of job.tags">{{ tag }}</span>
+                </div>
+                <div class="actions">
+                  <button class="btn-apply">Aplicar Ahora</button>
+                  <button class="btn-msg">Mensajes</button>
+                </div>
+              </div> -->
+            <!-- </div> -->
+          <!-- </div> -->
+        </section>
+      </div>
+      <!-- Filtro lateral -->
+
     </main>
   
   </div>

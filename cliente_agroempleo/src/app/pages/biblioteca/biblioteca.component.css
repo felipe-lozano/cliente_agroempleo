@@ -8,197 +8,6 @@
     box-sizing: border-box;
   }
   
-  /* ===========================
-     ESTILOS GENERALES DEL BODY
-     Define fuente, color de fondo y espacio superior
-     para que el contenido no quede oculto bajo el header
-     =========================== */
-  body {
-    font-family: Arial, sans-serif;    /* Fuente principal */
-    background-color: #f8fafc;         /* Color de fondo suave */
-    padding-top: 60px;                 /* Altura del header fijo */
-  }
-  .filter-group {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 1rem;
-    max-width: 400px;
-    width: 100%;
-  }
-  
-  .filter-group label {
-    font-weight: 600;
-    margin-bottom: 0.5rem;
-    color: #1e293b;
-  }
-  
-  .filter-group select {
-    padding: 0.6rem;
-    border: 1px solid #cbd5e1;
-    border-radius: 8px;
-    font-size: 1rem;
-    background-color: #f8fafc;
-    color: #1e293b;
-    transition: border-color 0.3s, box-shadow 0.3s;
-  }
-  
-  .filter-group select:focus {
-    outline: none;
-    border-color: #2563eb;
-    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
-  }
-  /* ===========================
-     HEADER FIJO
-     Posiciona el header siempre visible en la parte superior
-     =========================== */
-  header {
-    position: fixed;                   /* Se fija al viewport */
-    top: 0;                            /* Arriba */
-    left: 0;                           /* A la izquierda */
-    right: 0;                          /* A la derecha */
-    background-color: white;           /* Fondo blanco */
-    border-bottom: 1px solid #ddd;     /* Línea inferior */
-    z-index: 1000;                     /* Delante de otros elementos */
-    height: 60px;                      /* Altura fija */
-  }
-  
-  /* ===========================
-     CONTENEDOR INTERNO
-     Centra y alinea el contenido del header
-     =========================== */
-  .wrap-container {
-    max-width: 1200px;                 /* Ancho máximo */
-    margin: 0 auto;                    /* Centrado horizontal */
-    height: 100%;                      /* Ocupa toda la altura del header */
-    display: flex;                     /* Flexbox para alineación */
-    justify-content: space-between;    /* Espacio entre branding y menú */
-    align-items: center;               /* Centrado vertical */
-    padding: 0 1rem;                   /* Espacio lateral */
-  }
-  
-  /* ===========================
-     BRANDING (Logo + Texto)
-     =========================== */
-  .branding {
-    display: flex;                     /* Flex para alinear logo+texto */
-    align-items: center;               /* Centrado vertical */
-    gap: 0.5rem;                       /* Espacio entre elementos */
-  }
-  
-  .logo-lg {
-    height: 32px;                      /* Altura fija del logo */
-  }
-  
-  .branding-text {
-    font-weight: bold;                 /* Texto en negrita */
-    color: #080808;                    /* Color primario */
-    font-size: 1.2rem;                 /* Tamaño de fuente */
-  }
-  
-  /* ===========================
-     MENÚ DE NAVEGACIÓN (Escritorio)
-     =========================== */
-  .menu {
-    display: flex;                     /* Flex para alinear elementos */
-    align-items: center;               /* Centrado vertical */
-  }
-  
-  .listMenu {
-    list-style: none;                  /* Quitar viñetas */
-    display: flex;                     /* Horizontal */
-    gap: 1.5rem;                       /* Espacio entre items */
-  }
-  
-  .listMenu li a {
-    text-decoration: none;             /* Sin subrayado */
-    color: #333;                       /* Color del texto */
-    font-size: 1rem;                   /* Tamaño de fuente */
-    transition: color 0.2s;            /* Transición suave al hover */
-  }
-  
-  .listMenu li a:hover {
-    color: #2563eb;                    /* Color al pasar el cursor */
-  }
-  
-  /* ===========================
-     BOTÓN MENÚ MÓVIL (Hamburguesa)
-     Inicialmente oculto en escritorio
-     =========================== */
-  .mobileMenuButton {
-    display: none;                     /* No se muestra en desktop */
-    background: none;                  /* Sin fondo */
-    border: none;                      /* Sin borde */
-    cursor: pointer;                   /* Cursor pointer */
-  }
-  
-  .mobileMenuButton span {
-    display: block;                    /* Mostrar barras */
-    width: 24px;                       /* Ancho de cada barra */
-    height: 2px;                       /* Grosor de la barra */
-    background-color: #333;            /* Color de la barra */
-    position: relative;                /* Para posicionar pseudoelementos */
-  }
-  
-  .mobileMenuButton span::before,
-  .mobileMenuButton span::after {
-    content: "";                       /* Barras adicionales */
-    position: absolute;                /* Posicionamiento absoluto */
-    width: 24px;
-    height: 2px;
-    background-color: #333;
-    left: 0;
-  }
-  
-  .mobileMenuButton span::before {
-    top: -6px;                         /* Barra superior */
-  }
-  
-  .mobileMenuButton span::after {
-    top: 6px;                          /* Barra inferior */
-  }
-  
-  /* ===========================
-     ESTILOS RESPONSIVE (≤768px)
-     - Oculta menú de escritorio
-     - Muestra botón hamburguesa
-     - Estilo del menú desplegable
-     =========================== */
-  @media (max-width: 768px) {
-    /* Ocultar menú horizontal */
-    .listMenu {
-      display: none;                   /* Oculto por defecto */
-      position: absolute;              /* Desplegable encima del contenido */
-      top: 60px;                       /* Bajo el header */
-      right: 1rem;                     /* A la derecha */
-      background-color: white;         /* Fondo blanco */
-      flex-direction: column;          /* Vertical */
-      padding: 1rem;                   /* Espacio interior */
-      border: 1px solid #ddd;          /* Borde suave */
-    }
-    .filter-group {
-        max-width: 100%;
-      }
-    
-      .filter-group select {
-        font-size: 0.95rem;
-      }
-  
-    /* Mostrar menú cuando tenga la clase .open */
-    .listMenu.open {
-      display: flex;
-    }
-  
-    /* Mostrar botón hamburguesa */
-    .mobileMenuButton {
-      display: block;
-    }
-  
-    /* Ajuste de padding y tamaño de fuente en móviles */
-    .listMenu li a {
-      padding: 0.5rem 0;
-      font-size: 1rem;
-    }
-  }
 
 /* Reset básico */
 * {
@@ -264,28 +73,7 @@
     display: flex;
     padding: 30px;
   }
-  
-  /* Sidebar */
-  .job-sidebar {
-    width: 260px;
-    background-color: #fff;
-    padding: 20px;
-    margin-right: 30px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.05);
-  }
-  
-  .job-sidebar h3 {
-    margin-bottom: 15px;
-  }
-  
-  .job-sidebar input {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-  }
+
   
 
 
@@ -407,11 +195,6 @@
       flex-direction: column;
     }
   
-    .job-sidebar {
-      width: 100%;
-      margin-right: 0;
-      margin-bottom: 20px;
-    }
   
     .results-header {
       flex-direction: column;
@@ -424,4 +207,189 @@
     }
   }
   
-  
+
+  /* css para los botones de limpiar y aplicar filtros */
+ /* Contenedor general del layout */
+ .layout-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+@media (min-width: 768px) {
+  .layout-container {
+    flex-direction: row;
+    align-items: flex-start;
+
+  }
+
+  .job-sidebar {
+    flex: 0 0 250px;
+
+  }
+
+  .job-results {
+    flex: 1;
+  }
+}
+
+/* Sidebar */
+.job-sidebar {
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  padding: 1rem;
+  width: 800px;
+  margin-left: 08%;
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+}
+
+.filter-group label {
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.filter-group select {
+  padding: 0.5rem;
+  font-size: 1rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+/* Botones de filtros */
+.filter-group.buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+@media (min-width: 600px) {
+  .filter-group.buttons {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}
+
+.filter-group.buttons button {
+  padding: 0.5rem 1.2rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.filter-group.buttons button:first-child {
+  background-color: #3f8f42;
+  color: white;
+}
+
+.filter-group.buttons button:first-child:hover {
+  background-color: #45a049;
+}
+
+.filter-group.buttons button:last-child {
+  background-color: #d3372c;
+  color: white;
+}
+
+.filter-group.buttons button:last-child:hover {
+  background-color: #d32f2f;
+}
+
+/* Resultados de empleo */
+.job-results .results-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.job-results input[type="text"] {
+  padding: 0.5rem;
+  font-size: 1rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  width: 200px;
+}
+
+.job-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.job-card {
+  background-color: white;
+  border-radius: 8px;
+  padding: 1rem;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.card-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.job-logo {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+}
+
+.job-info h3 {
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+.job-info p {
+  margin: 0.3rem 0 0;
+  color: #666;
+}
+
+.job-menu {
+  margin-left: auto;
+  cursor: pointer;
+  font-size: 1.5rem;
+}
+
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1rem;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.tags span {
+  background-color: #e0e0e0;
+  border-radius: 16px;
+  padding: 0.3rem 0.8rem;
+  font-size: 0.8rem;
+  margin-right: 0.3rem;
+}
+
+.actions button {
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.btn-apply {
+  background-color: #007bff;
+  color: white;
+}
+
+.btn-msg {
+  background-color: #e0e0e0;
+  color: #333;
+}

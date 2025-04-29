@@ -17,8 +17,8 @@ interface OfertaLaboral {
   NivelRequerido: string;
   ExperienciaRequrida: string;
   NumeroVacantes: string;
-  IdtipoempleoTipodeempleo: string;
-  Idciudadtrabajociudad: string;
+  TipoEmpleo: string;
+  Ciudad: string;
 }
 
 @Component({
@@ -49,7 +49,7 @@ export class BibliotecaComponent {
 
   ngOnInit() {
     this.empleoService.obtenerOfertas().subscribe((data: any) => {
-      const arregloConsulta: OfertaLaboral[] = data["Consulta de id"];
+      const arregloConsulta: OfertaLaboral[] = data["Data"];
       this.ofertas = arregloConsulta;
       console.log(JSON.stringify(this.ofertas, null, 2));
     });
@@ -62,8 +62,8 @@ export class BibliotecaComponent {
         oferta.DescripcionTrabajo.toLowerCase().includes(this.terminoBusqueda.toLowerCase());
 
       const coincideExperiencia = this.filtroExperiencia === 'Todas' || oferta.ExperienciaRequrida === this.filtroExperiencia;
-      const coincideContrato = this.filtroContrato === 'Todos' || oferta.IdtipoempleoTipodeempleo === this.filtroContrato;
-      const coincideJornada = this.filtrociudad === 'Todas' || oferta.Idciudadtrabajociudad === this.filtrociudad;
+      const coincideContrato = this.filtroContrato === 'Todos' || oferta.TipoEmpleo === this.filtroContrato;
+      const coincideJornada = this.filtrociudad === 'Todas' || oferta.Ciudad === this.filtrociudad;
       const coincideModalidad = this.filtroModalidad === 'Todas' || oferta.Modalidad === this.filtroModalidad;
 
       return coincideBusqueda && coincideExperiencia && coincideContrato && coincideJornada && coincideModalidad;

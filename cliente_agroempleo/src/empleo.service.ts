@@ -12,15 +12,15 @@ export interface OfertaLaboral {
   NivelRequerido: string;
   ExperienciaRequrida: string;
   NumeroVacantes: string;
-  IdtipoempleoTipodeempleo: string;
-  Idciudadtrabajociudad: string;
+  TipoEmpleo: string;
+  Ciudad: string;
 }
 
 @Injectable({
   providedIn: 'root'
 })
 export class EmpleoService {
-  private apiUrl = 'http://localhost:8083/v1/Vacantes'; // URL de la API JSON
+  private apiUrl = 'http://localhost:8082/v1/vacante'; // URL de la API JSON
 
   constructor(private http: HttpClient) {}
 

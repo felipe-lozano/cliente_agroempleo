@@ -20,7 +20,8 @@ export interface OfertaLaboral {
   providedIn: 'root'
 })
 export class EmpleoService {
-  private apiUrl = 'http://localhost:3000/ofertas'; // URL de la API JSON
+  private apiUrl = 'http://localhost:8082/v1/vacante'; // URL de la API JSON
+
 
   constructor(private http: HttpClient) {}
 

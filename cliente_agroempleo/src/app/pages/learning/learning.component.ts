@@ -114,4 +114,4 @@ export class LearningComponent implements OnInit {
   toggleFavorito(curso: any) {
     curso.favorito = !curso.favorito;
   }
-}
+}   

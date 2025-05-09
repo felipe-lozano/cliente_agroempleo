@@ -12,8 +12,9 @@ export interface OfertaLaboral {
   NivelRequerido: string;
   ExperienciaRequrida: string;
   NumeroVacantes: string;
-  IdTipoEmpleoTipoDeEmpleo: string;
-  IdCiudadTrabajoCiudad: string;
+  TipoEmpleo: string;
+  Ciudad: string;
+  publicado_por: string
 }
 
 @Injectable({
@@ -26,6 +27,8 @@ export class EmpleoService {
   constructor(private http: HttpClient) {}
 
   obtenerOfertas(): Observable<OfertaLaboral[]> {
+    
     return this.http.get<OfertaLaboral[]>(this.apiUrl);
+    
   }
 }

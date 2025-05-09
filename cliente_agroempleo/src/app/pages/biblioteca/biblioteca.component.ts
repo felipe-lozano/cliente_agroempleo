@@ -1,8 +1,6 @@
 
 import {Component, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
-import { API_URLS } from '../../../config/api-config';
 import { MatDialog, MatDialogModule, } from '@angular/material/dialog';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
@@ -19,8 +17,9 @@ interface OfertaLaboral {
   NivelRequerido: string;
   ExperienciaRequrida: string;
   NumeroVacantes: string;
-  IdTipoEmpleoTipoDeEmpleo: string;
-  IdCiudadTrabajoCiudad: string;
+  TipoEmpleo: string;
+  Ciudad: string;
+  publicado_por: string
 }
 
 @Component({
@@ -50,8 +49,10 @@ export class BibliotecaComponent {
   constructor(private empleoService: EmpleoService) {}
 
   ngOnInit() {
-    this.empleoService.obtenerOfertas().subscribe((data) => {
-      this.ofertas = data;
+    this.empleoService.obtenerOfertas().subscribe((data: any) => {
+      const arregloConsulta: OfertaLaboral[] = data["Data"];
+      this.ofertas = arregloConsulta;
+      console.log(JSON.stringify(this.ofertas, null, 2));
     });
   }
 
@@ -62,8 +63,8 @@ export class BibliotecaComponent {
         oferta.DescripcionTrabajo.toLowerCase().includes(this.terminoBusqueda.toLowerCase());
 
       const coincideExperiencia = this.filtroExperiencia === 'Todas' || oferta.ExperienciaRequrida === this.filtroExperiencia;
-      const coincideContrato = this.filtroContrato === 'Todos' || oferta.IdTipoEmpleoTipoDeEmpleo === this.filtroContrato;
-      const coincideJornada = this.filtrociudad === 'Todas' || oferta.IdCiudadTrabajoCiudad === this.filtrociudad;
+      const coincideContrato = this.filtroContrato === 'Todos' || oferta.TipoEmpleo === this.filtroContrato;
+      const coincideJornada = this.filtrociudad === 'Todas' || oferta.Ciudad === this.filtrociudad;
       const coincideModalidad = this.filtroModalidad === 'Todas' || oferta.Modalidad === this.filtroModalidad;
 
       return coincideBusqueda && coincideExperiencia && coincideContrato && coincideJornada && coincideModalidad;
@@ -71,7 +72,28 @@ export class BibliotecaComponent {
   }
 
   experiencias: string[] = ['Todas', 'Junior', 'Intermedio', 'Senior'];
-  tiposContrato: string[] = ['Todos', 'Indefinido', 'Temporal', 'Freelance'];
+  tiposContrato: string[] = ['Todos', 'indefinido', 'Temporal', 'Freelance'];
   ciudad: string[] = ['Todas','Bogotá','Medellín','Cali','Barranquilla','Cartagena','Cúcuta','Santa Marta','Villavicencio','San Gil'];
   modalidades: string[] = ['Todas', 'Remoto', 'Presencial', 'Híbrido'];
+
+  modalAbierto = false;
+  ofertaSeleccionada: any = null;
+
+
+  abrirModal(oferta: any) {
+    this.ofertaSeleccionada = oferta;
+    this.modalAbierto = true;
+  }
+  
+  cerrarModal() {
+    this.modalAbierto = false;
+    this.ofertaSeleccionada = null;
+  }
+  Postularme() {
+    console.log("hola");
+    alert("postulacion enviada");
+    this.modalAbierto = false;
+  }
+ 
+
 }

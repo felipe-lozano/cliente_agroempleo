@@ -1,101 +1,86 @@
-:host {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    background: url('/fondo_login.png') no-repeat center center/cover;
-    padding: 20px;
-    box-sizing: border-box;
-  }
-  
-  form {
-    background-color: rgba(255, 255, 255, 0.9);
-    padding: 15px 20px;
-    border-radius: 8px; /* Bordes redondeados para un diseño más suave */
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2); /* Sombra para darle profundidad al formulario */
-    width: 100%;
-    max-width: 410px; /* Formulario más pequeño para adaptarse mejor a diferentes pantallas */
-    box-sizing: border-box;
-  }
-  
-  h2 {
-    text-align: center;
-    margin-bottom: 15px;
-    color: #333;
-    font-size: 18px; /* Título más pequeño para un mejor encuadre en el formulario */
-  }
-  
-  .form-group {
-    margin-bottom: 12px; /* Espacio entre los campos reducido para un diseño más compacto */
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .form-row {
-    display: flex;
-    gap: 8px; /* Menos espacio entre los campos de fecha */
-    margin-top: 5px;
-  }
-  
-  .form-row input {
-    flex: 1;
-  }
-  
-  label {
-    margin-bottom: 4px;
-    font-weight: 500;
-    font-size: 14px; /* Reducir tamaño de las etiquetas para compactar el formulario */
-  }
-  
-  input,
-  select {
-    padding: 6px; /* Reducir el padding para hacer los campos más compactos */
-    border: 1px solid #ccc;
-    border-radius: 5px; /* Bordes redondeados para suavizar el diseño */
-    font-size: 13px; /* Fuente más pequeña para hacer el formulario más compacto */
-  }
-  
-  input:focus,
-  select:focus {
-    outline: none;
-    border-color: #5c9ded;
-    box-shadow: 0 0 3px rgba(92, 157, 237, 0.5); /* Resaltar campos al hacer foco para mejorar la experiencia del usuario */
-  }
-  
-  .form-actions {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 15px; /* Espacio reducido entre los botones */
-  }
-  
-  button {
-    padding: 6px 18px; /* Botones más pequeños para un diseño más ordenado */
-    font-size: 13px; /* Fuente más pequeña en los botones */
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease; /* Transición suave al pasar el ratón */
-  }
-  
-  button.accept {
-    background-color: #4caf50;
-    color: white;
-  }
-  
-  button.accept:hover {
-    background-color: #45a049; /* Sombra más oscura al pasar el ratón */
-  }
-  
-  button.cancel {
-    background-color: #f44336;
-    color: white;
-  }
-  
-  button.cancel:hover {
-    background-color: #d32f2f; /* Sombra más oscura al pasar el ratón */
-  }
-  
-  
-  
- 
-  
+/* Contenedor Principal */
+.register-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 40px 20px;
+  background: url('/fondo_login.png') center/cover no-repeat fixed;
+  box-sizing: border-box;
+}
+
+/* Tarjeta del Formulario */
+.register-card {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 700px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 12px;
+  padding: 30px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Sección del Formulario */
+.form-section {
+  width: 100%;
+}
+
+.form-section h2 {
+  text-align: center;
+  font-size: 1.8em;
+  font-weight: bold;
+  color: #7B1F30;
+  margin-bottom: 20px;
+}
+
+/* Estilo de los Inputs */
+mat-form-field {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.small-field {
+  flex: 1;
+  min-width: calc(33.333% - 10px);
+}
+
+/* Botón de Aceptar */
+.submit-btn {
+  width: 100%;
+  margin-top: 20px;
+  font-weight: bold;
+  background-color: white;
+  color: #7B1F30;
+  border: 2px solid #7B1F30;
+  border-radius: 25px;
+  transition: 0.3s ease;
+}
+
+.submit-btn:hover {
+  background-color: #7B1F30;
+  color: white;
+}
+
+/* Checkbox */
+mat-checkbox {
+  margin-top: 10px;
+}
+
+
+.small-field {
+  flex: 1;
+  margin-right: 8px;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+}

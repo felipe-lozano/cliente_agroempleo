@@ -1,121 +1,183 @@
+/* Estilos globales */
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f8f9fa;
+  color: #333;
+}
+
+/* Contenedor principal */
+.job-board-wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Encabezado */
 .job-header {
   display: flex;
-  align-items: center;
   justify-content: space-between;
+  align-items: center;
   flex-wrap: wrap;
-  padding: 1rem 2rem;
   background-color: #ffffff;
-  border-bottom: 1px solid #ddd;
-  gap: 1rem;
+  padding: 15px 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .logo {
   height: 40px;
 }
 
-/* ===========================
-     MENÚ DE NAVEGACIÓN (Escritorio)
-     =========================== */
-     .menu {
-      display: flex;                     /* Flex para alinear elementos */
-      align-items: center;               /* Centrado vertical */
-    }
-    
-    .listMenu {
-      list-style: none;                  /* Quitar viñetas */
-      display: flex;                     /* Horizontal */
-      gap: 1.5rem;                       /* Espacio entre items */
-    }
-    
-    .listMenu li a {
-      text-decoration: none;             /* Sin subrayado */
-      color: #333;                       /* Color del texto */
-      font-size: 1rem;                   /* Tamaño de fuente */
-      transition: color 0.2s;            /* Transición suave al hover */
-    }
-    
-    .listMenu li a:hover {
-      color: #2563eb;                    /* Color al pasar el cursor */
-    }
+.listMenu {
+  list-style: none;
+  display: flex;
+  gap: 15px;
+  padding: 0;
+  margin: 0;
+}
+
+.listMenu li a {
+  text-decoration: none;
+  color: #007bff;
+  font-weight: 500;
+}
 
 .user-profile {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 10px;
 }
 
 .user-name {
-  font-weight: 600;
-  color: #333;
+  font-weight: bold;
 }
 
 .avatar {
-  width: 40px;
-  height: 40px;
+  height: 35px;
+  width: 35px;
   border-radius: 50%;
   object-fit: cover;
-  border: 1px solid #ccc;
 }
 
-/* --- Responsive --- */
+/* Filtros */
+.filtros {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 20px 0;
+  justify-content: center;
+}
+
+.filtros input,
+.filtros select {
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  min-width: 180px;
+}
+
+/* Resultados */
+.resultados ul {
+  list-style: none;
+  padding: 0;
+}
+
+.resultados li {
+  background-color: #ffffff;
+  padding: 20px;
+  margin-bottom: 15px;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+.resultados h3 {
+  margin-top: 0;
+  color: #2c3e50;
+}
+
+.resultados p {
+  margin: 5px 0;
+  font-size: 14px;
+}
+
 @media (max-width: 768px) {
+  .listMenu {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
   .job-header {
     flex-direction: column;
     align-items: flex-start;
   }
 
-  .top-nav {
-    justify-content: flex-start;
-    width: 100%;
-  }
-
   .user-profile {
-    align-self: flex-end;
+    margin-top: 10px;
+  }
+
+  .filtros {
+    flex-direction: column;
+    align-items: stretch;
   }
 }
 
-/* css para filtros y tarjetas de trabajo */
-.filtros {
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
   display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-  margin-bottom: 2rem;
+  justify-content: center;
   align-items: center;
+  z-index: 999;
 }
 
-.filtros input,
-.filtros select {
-  padding: 0.5rem;
-  font-size: 1rem;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  min-width: 180px;
+.modal {
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 600px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
 }
 
-.resultados ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-.resultados li {
-  border: 1px solid #ddd;
+.modal button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
   border-radius: 8px;
-  padding: 1rem;
-  margin-bottom: 1rem;
-  background-color: #f9f9f9;
-  transition: box-shadow 0.2s;
+  cursor: pointer;
 }
 
-.resultados li:hover {
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+.ver-btn {
+  background-color: #28a745; /* verde atractivo */
+  color: #fff;
+  border: none;
+  padding: 10px 18px;
+  font-size: 15px;
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
+  margin-left: 10px;
 }
 
-.resultados h3 {
-  margin: 0 0 0.5rem 0;
-  color: #2c3e50;
+.ver-btn:hover {
+  background-color: #218838;
+  transform: scale(1.05);
 }
 
-.resultados p {
-  margin: 0.2rem 0;
-  color: #555;
+.ver-btn:active {
+  background-color: #1e7e34;
 }

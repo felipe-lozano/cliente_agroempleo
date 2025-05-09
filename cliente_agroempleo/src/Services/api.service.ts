@@ -24,7 +24,11 @@ export class Apiservice{
     delete<T>(url: string): Observable<T>{
         return this.http.delete<T>(url);
     }
+
+    
+
 }
+
 
 
 

@@ -19,6 +19,7 @@ interface OfertaLaboral {
   NumeroVacantes: string;
   TipoEmpleo: string;
   Ciudad: string;
+  publicado_por: string
 }
 
 @Component({
@@ -71,7 +72,28 @@ export class BibliotecaComponent {
   }
 
   experiencias: string[] = ['Todas', 'Junior', 'Intermedio', 'Senior'];
-  tiposContrato: string[] = ['Todos', 'Indefinido', 'Temporal', 'Freelance'];
+  tiposContrato: string[] = ['Todos', 'indefinido', 'Temporal', 'Freelance'];
   ciudad: string[] = ['Todas','Bogotá','Medellín','Cali','Barranquilla','Cartagena','Cúcuta','Santa Marta','Villavicencio','San Gil'];
   modalidades: string[] = ['Todas', 'Remoto', 'Presencial', 'Híbrido'];
+
+  modalAbierto = false;
+  ofertaSeleccionada: any = null;
+
+
+  abrirModal(oferta: any) {
+    this.ofertaSeleccionada = oferta;
+    this.modalAbierto = true;
+  }
+  
+  cerrarModal() {
+    this.modalAbierto = false;
+    this.ofertaSeleccionada = null;
+  }
+  Postularme() {
+    console.log("hola");
+    alert("postulacion enviada");
+    this.modalAbierto = false;
+  }
+ 
+
 }

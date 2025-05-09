@@ -1,0 +1,30 @@
+.perfil-card {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 2rem;
+}
+
+.perfil-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+
+  .icono {
+    font-size: 60px;
+    color: #3f51b5;
+  }
+}
+
+.formulario mat-form-field {
+  display: block;
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.acciones {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+}

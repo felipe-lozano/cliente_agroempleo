@@ -1,77 +1,112 @@
 
-<form (ngSubmit)="onSubmit()" #registerForm="ngForm">
-  <h2>Formulario de Registro</h2>
-  <div class="form-group">
-    <label for="role">Rol:</label>
-    <select id="role" name="role" [(ngModel)]="formData.role" required>
-      <option value="">Seleccione un rol</option>
-      <option value="empleador">Empleador</option>
-      <option value="aspirante">Aspirante</option>
-    </select>
-  </div>
+<div class="register-container">
+  <mat-card class="register-card">
+    <!-- Sección del formulario -->
+    <div class="form-section">
+      <h2>CREAR CUENTA</h2>
+      <form [formGroup]="registroForm" (ngSubmit)="aceptar()">
+        <mat-form-field appearance="outline">
+          <mat-label>Nombres</mat-label>
+          <input matInput formControlName="nombre" type="text" required />
+        </mat-form-field>
 
-  <div class="form-group">
-    <label for="fullname">Nombre Completo:</label>
-    <input type="text" id="fullname" name="fullname" [(ngModel)]="formData.fullname" required />
-  </div>
+        <mat-form-field appearance="outline">
+          <mat-label>Apellidos</mat-label>
+          <input matInput formControlName="apellido" type="text" required />
+        </mat-form-field>
 
-  <div class="form-group">
-    <label for="documentType">Tipo de Documento:</label>
-    <select id="documentType" name="documentType" [(ngModel)]="formData.documentType" required>
-      <option value="">Seleccione</option>
-      <option value="cc">Cédula de Ciudadanía</option>
-      <option value="passport">Pasaporte</option>
-    </select>
-  </div>
+        <mat-form-field appearance="outline">
+          <mat-label>Tipo de Usuario</mat-label>
+          <mat-select formControlName="tipoUsuario" required>
+            <mat-option value=1>Aspirante</mat-option>
+            <mat-option value=2>Empleador</mat-option>
+          </mat-select>
+        </mat-form-field>
 
-  <div class="form-group">
-    <label for="documentNumber">Número de Documento:</label>
-    <input type="text" id="documentNumber" name="documentNumber" [(ngModel)]="formData.documentNumber" required />
-  </div>
+        <mat-form-field appearance="outline">
+          <mat-label>Tipo de documento</mat-label>
+          <mat-select formControlName="tipoDocumento" required>
+            <mat-option value=1>CC</mat-option>
+            <mat-option value=2>CE</mat-option>
+          </mat-select>
+        </mat-form-field>
 
-  <div class="form-group">
-    <label for="email">Correo Electrónico:</label>
-    <input type="email" id="email" name="email" [(ngModel)]="formData.email" required />
-  </div>
+        <mat-form-field appearance="outline">
+          <mat-label>Número de documento</mat-label>
+          <input matInput formControlName="numeroDocumento" type="text" required />
+        </mat-form-field>
 
-  <div class="form-group">
-    <label for="address">Dirección:</label>
-    <input type="text" id="address" name="address" [(ngModel)]="formData.address" required />
-  </div>
+        <mat-form-field appearance="outline">
+          <mat-label>Correo electrónico</mat-label>
+          <input matInput formControlName="correo_electronico" type="email" required />
+        </mat-form-field>
 
-  <div class="form-row">
-    <div class="form-group">
-      <label for="city">Ciudad:</label>
-      <input type="text" id="city" name="city" [(ngModel)]="formData.city" required />
+        <div class="row">
+          <mat-form-field class="small-field" appearance="outline">
+            <mat-label>Día</mat-label>
+            <input matInput formControlName="dia" type="number" min="1" max="31" required />
+          </mat-form-field>
+          <mat-form-field class="small-field" appearance="outline">
+            <mat-label>Mes</mat-label>
+            <input matInput formControlName="mes" type="number" min="1" max="12" required />
+          </mat-form-field>
+          <mat-form-field class="small-field" appearance="outline">
+            <mat-label>Año</mat-label>
+            <input matInput formControlName="anio" type="number" min="1900" max="2010" required />
+          </mat-form-field>
+        </div>
+        <form [formGroup]="formulario">
+          <div class="row">
+            <!-- País -->
+            <mat-form-field class="small-field" appearance="outline">
+              <mat-label>País</mat-label>
+              <mat-select formControlName="pais">
+                <mat-option *ngFor="let p of paises" [value]="p">{{ p }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+        
+            <!-- Departamento -->
+            <mat-form-field class="small-field" appearance="outline">
+              <mat-label>Departamento</mat-label>
+              <mat-select formControlName="departamento" (selectionChange)="onDepartamentoChange()">
+                <mat-option *ngFor="let d of departamentos" [value]="d">{{ d }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+        
+            <!-- Ciudad -->
+            <mat-form-field class="small-field" appearance="outline">
+              <mat-label>Ciudad</mat-label>
+              <mat-select formControlName="ciudad" [disabled]="ciudadesFiltradas.length === 0">
+                <mat-option *ngFor="let c of ciudadesFiltradas" [value]="c">{{ c }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </form>
+        
+       
+        
+        <mat-form-field appearance="outline">
+          <mat-label>Telefono</mat-label>
+          <input matInput formControlName="celular" type="number" required />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Contraseña</mat-label>
+          <input matInput formControlName="contrasena" type="password" required />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Confirmar contraseña</mat-label>
+          <input matInput formControlName="confirmarContrasena" type="password" required />
+        </mat-form-field>
+
+        <mat-checkbox formControlName="terminos"> Términos y condiciones de uso</mat-checkbox>
+
+        <button mat-raised-button color="primary" class="submit-btn" type="submit">ACEPTAR</button>
+      </form>
+
     </div>
-    <div class="form-group">
-      <label for="department">Departamento:</label>
-      <input type="text" id="department" name="department" [(ngModel)]="formData.department" required />
-    </div>
-  </div>
 
-  <div class="form-group">
-    <label>Fecha de Nacimiento:</label>
-    <div class="form-row">
-      <input type="number" name="birthDay" placeholder="Día" min="1" max="31" [(ngModel)]="formData.birthDay" required />
-      <input type="number" name="birthMonth" placeholder="Mes" min="1" max="12" [(ngModel)]="formData.birthMonth" required />
-      <input type="number" name="birthYear" placeholder="Año" min="1900" max="2007" [(ngModel)]="formData.birthYear" required />
-    </div>
-  </div>
-
-  <div class="form-group">
-    <label for="password">Contraseña:</label>
-    <input type="password" id="password" name="password" [(ngModel)]="formData.password" required />
-  </div>
-
-  <div class="form-group">
-    <label for="confirmPassword">Confirmación de Contraseña:</label>
-    <input type="password" id="confirmPassword" name="confirmPassword" [(ngModel)]="formData.confirmPassword" required />
-  </div>
-
-  <div class="form-actions">
-    <button type="submit" class="accept">Aceptar</button>
-    <button routerLink="/login" type="reset" class="cancel" (click)="onReset()">Cancelar</button>
-  </div>
-
-</form>
+    <!-- Sección del Logo -->
+  </mat-card>
+</div>

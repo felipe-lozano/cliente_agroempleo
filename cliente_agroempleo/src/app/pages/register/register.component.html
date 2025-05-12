@@ -1,7 +1,5 @@
-
 <div class="register-container">
   <mat-card class="register-card">
-    <!-- Sección del formulario -->
     <div class="form-section">
       <h2>CREAR CUENTA</h2>
       <form [formGroup]="registroForm" (ngSubmit)="aceptar()">
@@ -18,16 +16,16 @@
         <mat-form-field appearance="outline">
           <mat-label>Tipo de Usuario</mat-label>
           <mat-select formControlName="tipoUsuario" required>
-            <mat-option value=1>Aspirante</mat-option>
-            <mat-option value=2>Empleador</mat-option>
+            <mat-option value="1">Aspirante</mat-option>
+            <mat-option value="2">Empleador</mat-option>
           </mat-select>
         </mat-form-field>
 
         <mat-form-field appearance="outline">
           <mat-label>Tipo de documento</mat-label>
           <mat-select formControlName="tipoDocumento" required>
-            <mat-option value=1>CC</mat-option>
-            <mat-option value=2>CE</mat-option>
+            <mat-option value="1">CC</mat-option>
+            <mat-option value="2">CE</mat-option>
           </mat-select>
         </mat-form-field>
 
@@ -55,38 +53,32 @@
             <input matInput formControlName="anio" type="number" min="1900" max="2010" required />
           </mat-form-field>
         </div>
-        <form [formGroup]="formulario">
-          <div class="row">
-            <!-- País -->
-            <mat-form-field class="small-field" appearance="outline">
-              <mat-label>País</mat-label>
-              <mat-select formControlName="pais">
-                <mat-option *ngFor="let p of paises" [value]="p">{{ p }}</mat-option>
-              </mat-select>
-            </mat-form-field>
-        
-            <!-- Departamento -->
-            <mat-form-field class="small-field" appearance="outline">
-              <mat-label>Departamento</mat-label>
-              <mat-select formControlName="departamento" (selectionChange)="onDepartamentoChange()">
-                <mat-option *ngFor="let d of departamentos" [value]="d">{{ d }}</mat-option>
-              </mat-select>
-            </mat-form-field>
-        
-            <!-- Ciudad -->
-            <mat-form-field class="small-field" appearance="outline">
-              <mat-label>Ciudad</mat-label>
-              <mat-select formControlName="ciudad" [disabled]="ciudadesFiltradas.length === 0">
-                <mat-option *ngFor="let c of ciudadesFiltradas" [value]="c">{{ c }}</mat-option>
-              </mat-select>
-            </mat-form-field>
-          </div>
-        </form>
-        
-       
-        
+
+        <div class="row">
+          <mat-form-field class="small-field" appearance="outline">
+            <mat-label>País</mat-label>
+            <mat-select formControlName="pais">
+              <mat-option *ngFor="let p of paises" [value]="p">{{ p }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field class="small-field" appearance="outline">
+            <mat-label>Departamento</mat-label>
+            <mat-select formControlName="departamento">
+              <mat-option *ngFor="let d of departamentos" [value]="d">{{ d }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field class="small-field" appearance="outline">
+            <mat-label>Ciudad</mat-label>
+            <mat-select formControlName="ciudad" [disabled]="ciudadesFiltradas.length === 0">
+              <mat-option *ngFor="let c of ciudadesFiltradas" [value]="c">{{ c }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
         <mat-form-field appearance="outline">
-          <mat-label>Telefono</mat-label>
+          <mat-label>Teléfono</mat-label>
           <input matInput formControlName="celular" type="number" required />
         </mat-form-field>
 
@@ -100,13 +92,14 @@
           <input matInput formControlName="confirmarContrasena" type="password" required />
         </mat-form-field>
 
-        <mat-checkbox formControlName="terminos"> Términos y condiciones de uso</mat-checkbox>
+        <mat-checkbox formControlName="terminos">
+          Términos y condiciones de uso
+        </mat-checkbox>
 
-        <button mat-raised-button color="primary" class="submit-btn" type="submit">ACEPTAR</button>
+        <button mat-raised-button color="primary" class="submit-btn" type="submit">
+          ACEPTAR
+        </button>
       </form>
-
     </div>
-
-    <!-- Sección del Logo -->
   </mat-card>
 </div>

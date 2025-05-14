@@ -26,7 +26,7 @@ export class Apiconfig {
 }
 export const API_URLS = {
     Mid:{
-        Api_mid:'localhost:8081/v1'
+        Api_mid:'localhost:8085/v1'
         
     },
     Crud:{

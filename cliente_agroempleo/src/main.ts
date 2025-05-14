@@ -10,7 +10,9 @@ import { RecuperarComponent } from './app/pages/recuperar/recuperar.component';
 import { BibliotecaComponent } from './app/pages/biblioteca/biblioteca.component';
 import { JobBoardComponent } from './app/pages/job-board/job-board.component';
 import { LearningComponent } from './app/pages/learning/learning.component';
+import { VideoModalComponent } from './app/pages/learning/video-modal/video-modal.component';
 import { PerfilComponent } from './app/pages/perfil/perfil.component';
+
 
 bootstrapApplication(AppComponent,{
     providers:[
@@ -30,6 +32,7 @@ bootstrapApplication(AppComponent,{
             {path: 'biblioteca', component: BibliotecaComponent},
             {path: 'job', component: JobBoardComponent},
             {path: 'learning', component: LearningComponent},
+            {path: 'video', component: VideoModalComponent},
             {path: 'perfil', component: PerfilComponent}
 
            
@@ -40,3 +43,4 @@ bootstrapApplication(AppComponent,{
         provideHttpClient()
     ]
 }).catch(err => console.error(err));
+

@@ -105,7 +105,9 @@ export class RegisterComponent implements OnInit {
       console.log('Registro exitoso', this.registroForm.value);
       console.log('JSON formateado:\n', JSON.stringify(this.registroForm.value, null, 2));
 
-      this.apiService.postData('registro', this.registroForm.value).subscribe({
+      const json_register = JSON.stringify(this.registroForm.value);
+
+      this.apiService.postData('registro', json_register).subscribe({
         next: (response) => {
           console.log('Respuesta del servidor:', response);
           alert('Usuario creado');
@@ -120,4 +122,5 @@ export class RegisterComponent implements OnInit {
       console.log('Formulario inválido');
     }
   }
+
 }

@@ -1,31 +1,54 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Pipe, PipeTransform } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
+import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { RouterModule } from '@angular/router';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+
+@Pipe({
+  name: 'filtroCursos',
+  standalone: true
+})
+export class FiltroCursosPipe implements PipeTransform {
+  transform(cursos: any[], curso: string, nivel: string, tiempo: string, extra: string, favoritos: string): any[] {
+    return cursos.filter(c => {
+      return (!curso || c.titulo.toLowerCase().includes(curso.toLowerCase())) &&
+             (!nivel || c.nivel === nivel) &&
+             (!tiempo || c.duracion.includes(tiempo)) &&
+             (!extra || c.autor.toLowerCase().includes(extra.toLowerCase())) &&
+             (!favoritos || c.favorito === (favoritos === 'Sí'));
+    });
+  }
+}
 
 @Component({
   selector: 'app-learning',
   standalone: true,
   imports: [
     CommonModule,
+    FormsModule,
+    RouterModule,
     MatToolbarModule,
     MatButtonModule,
     MatIconModule,
-    RouterModule,
     MatSidenavModule,
     MatListModule,
     MatDividerModule,
     MatCardModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    MatSelectModule,
+    FiltroCursosPipe,
+    MatTableModule
   ],
   templateUrl: './learning.component.html',
   styleUrl: './learning.component.css'
@@ -33,31 +56,76 @@ import { MatInputModule } from '@angular/material/input';
 export class LearningComponent implements OnInit {
   usuario = 'Nicolas';
 
+  filtroCurso = '';
+  filtroNivel = '';
+  filtroTiempo = '';
+  filtroExtra = '';
+  filtroFavoritos = '';
+
   recomendaciones = [
     {
-      titulo: 'Excel para principiantes: Tablas dinámicas (365/2019)',
+      titulo: 'Excel para principiantes',
       autor: 'Isabel Fernández Gutiérrez',
-      duracion: '51 min'
+      duracion: '51 min',
+      nivel: 'Básico',
+      favorito: true,
+      videoUrl: 'assets/videos/excel.mp4'
     },
     {
-      titulo: 'Inglés de negocios: Trucos y consejos semanales',
+      titulo: 'Inglés de negocios',
       autor: 'Speexx',
-      duracion: '26 min'
+      duracion: '26 min',
+      nivel: 'Intermedio',
+      favorito: false,
+      videoUrl: 'assets/videos/ingles.mp4'
     },
     {
-      titulo: 'Adobe After Effects esencial',
+      titulo: 'After Effects esencial',
       autor: 'Jorge Mochón',
-      duracion: '4 h 3 min'
+      duracion: '4 h 3 min',
+      nivel: 'Avanzado',
+      favorito: true,
+      videoUrl: 'assets/videos/after.mp4'
     },
     {
-      titulo: 'Marketing B2B: generación de demanda',
+      titulo: 'Marketing B2B',
       autor: 'Jordi Marca',
-      duracion: 'Desconocido'
+      duracion: 'Desconocido',
+      nivel: 'Intermedio',
+      favorito: false,
+      videoUrl: 'assets/videos/marketing.mp4'
     }
   ];
 
-  ngOnInit() {
-    // Puedes obtener el nombre del usuario desde almacenamiento o servicio si quieres
-    // this.usuario = localStorage.getItem('usuario') || 'Invitado';
+  ngOnInit() {}
+
+  playVideo(event: any) {
+    const video = event.target as HTMLVideoElement;
+    video.currentTime = 0;
+    video.play();
+    video.setAttribute('controls', 'true');
   }
+
+  pauseVideo(event: any) {
+    const video = event.target as HTMLVideoElement;
+    video.pause();
+    video.removeAttribute('controls');
+  }
+
+  toggleFavorito(curso: any) {
+    curso.favorito = !curso.favorito;
+  }
+
+  // 🔽 Nueva función agregada aquí
+  onFileSelected(event: Event): void {
+  const input = event.target as HTMLInputElement;
+
+  if (input.files && input.files.length > 0) {
+    const file = input.files[0];
+    console.log('📁 Archivo seleccionado:', file);
+
+    // Aquí podrías subir el archivo al servidor si tienes backend
+  }
+}
+
 }

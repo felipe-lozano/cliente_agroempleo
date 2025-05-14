@@ -1,49 +1,116 @@
 <mat-toolbar color="primary" class="toolbar">
-    <img src="logo.png" alt="Logo" class="logo" />
-    <span class="app-name">Learning</span>
-    <span class="spacer"></span>
-    <span class="usuario">{{ usuario }}</span>
-  </mat-toolbar>
-  
-  <mat-sidenav-container class="sidenav-container">
-    <mat-sidenav mode="side" opened class="sidenav">
-      <mat-nav-list>
-        <mat-list-item>Inicio</mat-list-item>
-        <mat-list-item>Mi trayectoria profesional</mat-list-item>
-        <mat-list-item>Mi biblioteca</mat-list-item>
-        <mat-list-item>Contenido</mat-list-item>
-        <mat-list-item>Certificaciones</mat-list-item>
-      </mat-nav-list>
-    </mat-sidenav>
-  
-    <mat-sidenav-content>
-      <div class="welcome-section">
-        <h1>{{ usuario }}, mejora tus aptitudes y avanza en tu carrera con Agroempleo Learning</h1>
+  <img src="logo.png" alt="Logo" class="logo" />
+  <span class="app-name">Learning</span>
+  <span class="spacer"></span>
+  <span class="usuario">{{ usuario }}</span>
+</mat-toolbar>
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav mode="side" opened class="sidenav">
+    <mat-nav-list>
+      <mat-list-item>Inicio</mat-list-item>
+      <mat-list-item>Busqueda de empleo</mat-list-item>
+      <mat-list-item>Mi biblioteca</mat-list-item>
+      <mat-list-item>Login</mat-list-item>
+      <mat-list-item>Cvd</mat-list-item>
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <div class="welcome-section">
+      <h1>{{ usuario }}, mejora tus aptitudes y avanza en tu carrera con Agroempleo Learning</h1>
+    </div>
+    <div class="upload-section" style="margin: 16px;">
+  <button mat-raised-button color="primary" (click)="fileInput.click()">Subir Cdv</button>
+  <input
+    type="file"
+    hidden
+    #fileInput
+    (change)="onFileSelected($event)"
+    accept=".pdf,.doc,.docx,.txt"
+  />
+</div>
+
+
+    <div class="selection-buttons">
+      <mat-form-field appearance="fill">
+        <mat-label>Cursos</mat-label>
+        <mat-select [(ngModel)]="filtroCurso">
+          <mat-option value="">Todos</mat-option>
+          <mat-option value="Excel">Excel</mat-option>
+          <mat-option value="Inglés">Inglés</mat-option>
+          <mat-option value="Angular">Angular</mat-option>
+
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Nivel</mat-label>
+        <mat-select [(ngModel)]="filtroNivel">
+          <mat-option value="">Todos</mat-option>
+          <mat-option value="Básico">Básico</mat-option>
+          <mat-option value="Intermedio">Intermedio</mat-option>
+          <mat-option value="Avanzado">Avanzado</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Tiempo</mat-label>
+        <mat-select [(ngModel)]="filtroTiempo">
+          <mat-option value="">Todos</mat-option>
+          <mat-option value="min">Menos de 30 Minutos</mat-option>
+          <mat-option value="min">30-60 Minutos</mat-option>
+          <mat-option value="h">1-3 Horas</mat-option>
+          <mat-option value="h">Más de 3 horas</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Autor</mat-label>
+        <mat-select [(ngModel)]="filtroExtra">
+          <mat-option value="">Todos</mat-option>
+          <mat-option value="Isabel">Isabel</mat-option>
+          <mat-option value="Jordi">Jordi</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Favoritos</mat-label>
+        <mat-select [(ngModel)]="filtroFavoritos">
+          <mat-option value="">Todos</mat-option>
+          <mat-option value="Sí">Sí</mat-option>
+          <mat-option value="No">No</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="course-recommendations">
+      <h2>Principales recomendaciones para {{ usuario }}</h2>
+
+      <div class="carousel-wrapper">
+        <div class="carousel">
+          <mat-card *ngFor="let curso of recomendaciones | filtroCursos:filtroCurso:filtroNivel:filtroTiempo:filtroExtra:filtroFavoritos" class="course-card">
+            <video 
+              [src]="curso.videoUrl" 
+              muted
+              (mouseenter)="playVideo($event)" 
+              (mouseleave)="pauseVideo($event)"
+              class="video-hover"
+            ></video>
+            <mat-card-title>{{ curso.titulo }}</mat-card-title>
+            <mat-card-subtitle>Por: {{ curso.autor }}</mat-card-subtitle>
+            <p>Duración: {{ curso.duracion }}</p>
+            <button mat-icon-button (click)="toggleFavorito(curso)" [color]="curso.favorito ? 'warn' : 'default'" aria-label="Favorito">
+              <mat-icon>{{ curso.favorito ? 'favorite' : 'favorite_border' }}</mat-icon>
+            </button>
+          </mat-card> 
+        </div>
       </div>
-  
-      <div class="selection-buttons">
-        <button mat-raised-button class="filter-button">Cursos</button>
-        <button mat-raised-button class="filter-button">Nivel</button>
-        <button mat-raised-button class="filter-button">Tiempo para Finalizar</button>
-        <button mat-raised-button class="filter-button">Filtros</button>
-        <button mat-raised-button class="filter-button">Favoritos</button>
-      </div>
-  
-      <div class="course-recommendations">
-        <h2>Principales recomendaciones para {{ usuario }}</h2>
-        <mat-card *ngFor="let curso of recomendaciones" class="course-card">
-          <mat-card-title>{{ curso.titulo }}</mat-card-title>
-          <mat-card-subtitle>Por: {{ curso.autor }}</mat-card-subtitle>
-          <p>Duración: {{ curso.duracion }}</p>
-        </mat-card>
-      </div>
-  
-      <div class="skills-section">
-        <h3>Identifica las aptitudes necesarias para avanzar en tu carrera</h3>
-        <mat-form-field appearance="outline" class="skills-input">
-          <input matInput placeholder="Gerente de productos">
-        </mat-form-field>
-      </div>
-    </mat-sidenav-content>
-  </mat-sidenav-container>
-  
+    </div>
+    <div class="skills-section">
+      <h3>Identifica las aptitudes necesarias para avanzar en tu carrera</h3>
+      <mat-form-field appearance="outline" class="skills-input">
+        <input matInput placeholder="Gerente de productos">
+      </mat-form-field>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container> 

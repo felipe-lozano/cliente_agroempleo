@@ -2,7 +2,7 @@ import { Component, OnInit, Pipe, PipeTransform } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-
+import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -48,6 +48,7 @@ export class FiltroCursosPipe implements PipeTransform {
     MatInputModule,
     MatSelectModule,
     FiltroCursosPipe,
+    MatTableModule
   ],
   templateUrl: './learning.component.html',
   styleUrl: './learning.component.css'
@@ -114,4 +115,17 @@ export class LearningComponent implements OnInit {
   toggleFavorito(curso: any) {
     curso.favorito = !curso.favorito;
   }
-}   
+
+  // 🔽 Nueva función agregada aquí
+  onFileSelected(event: Event): void {
+  const input = event.target as HTMLInputElement;
+
+  if (input.files && input.files.length > 0) {
+    const file = input.files[0];
+    console.log('📁 Archivo seleccionado:', file);
+
+    // Aquí podrías subir el archivo al servidor si tienes backend
+  }
+}
+
+}

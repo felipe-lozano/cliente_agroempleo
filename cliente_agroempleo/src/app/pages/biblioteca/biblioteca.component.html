@@ -1,24 +1,11 @@
+<app-user-header></app-user-header>
 
 <body>
 
   <div class="job-board-wrapper">
 
     <!-- Encabezado superior -->
-    <header class="job-header">
-      <img src="/logo.png" alt="Logo Agroempleo" class="logo">
-        <ul class="listMenu" [class.open]="isMenuOpen">
-      
-          <li><a routerLink="/home">Inicio</a></li>
-          <li><a routerLink="/biblioteca">Búsqueda de empleo</a></li>
-          <li><a routerLink="/contacto">Contacto</a></li>
-          <li><a routerLink="/login">Login</a></li>
-        </ul>
-
-      <div class="user-profile">
-        <span class="user-name">Luis Lopez</span>
-        <img src="assets/user.png" alt="Usuario" class="avatar">
-      </div>
-    </header>
+    
 
     <div class="filtros">
       <input [(ngModel)]="terminoBusqueda" placeholder="Buscar por puesto o empresa..." />

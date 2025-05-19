@@ -10,7 +10,9 @@ export class UsuarioService {
 
   constructor(private http: HttpClient) {}
 
-  obtenerUsuario(id: number): Observable<any> {
-    return this.http.get(`${this.apiUrl}/${id}`);
+  obtenerUsuario(Id: number): Observable<any> {
+    return this.http.get(`${this.apiUrl}/${Id}`);
   }
+  
 }
+

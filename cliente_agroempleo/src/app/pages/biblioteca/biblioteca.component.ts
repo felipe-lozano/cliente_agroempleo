@@ -5,7 +5,8 @@ import { MatDialog, MatDialogModule, } from '@angular/material/dialog';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { EmpleoService } from '../../../empleo.service';
-
+import { UsuarioService } from '../../../usuario.service';
+import { UserHeaderComponent } from "../components/user-header/user-header.component";
 
 
 interface OfertaLaboral {
@@ -27,15 +28,17 @@ interface OfertaLaboral {
   imports: [
     CommonModule,
     FormsModule,
-    RouterModule
-    
-
-  ],
+    RouterModule,
+    UserHeaderComponent
+],
   templateUrl: './biblioteca.component.html',
   styleUrl: './biblioteca.component.css'
 })
 export class BibliotecaComponent {
   isMenuOpen = false;
+
+  Nombre: string = '';
+  avatarUrl: string = '/img.png';
 
 
   terminoBusqueda: string = '';
@@ -46,13 +49,23 @@ export class BibliotecaComponent {
 
   ofertas: OfertaLaboral[] = [];
 
-  constructor(private empleoService: EmpleoService) {}
+  constructor(private empleoService: EmpleoService, private usuarioService: UsuarioService) {}
 
-  ngOnInit() {
+  ngOnInit ()  {
     this.empleoService.obtenerOfertas().subscribe((data: any) => {
       const arregloConsulta: OfertaLaboral[] = data["Data"];
       this.ofertas = arregloConsulta;
       console.log(JSON.stringify(this.ofertas, null, 2));
+    });
+
+    const usuarioId = 1;
+    console.log("ngOnInit cargado");
+
+    this.usuarioService.obtenerUsuario(usuarioId).subscribe(usuario => {
+    console.log("Usuario obtenido:", usuario);
+    this.Nombre = usuario["Consulta de id"].Nombre;
+    this.avatarUrl = usuario.avatar || '/img.png';
+    console.log("Nombre:", this.Nombre);
     });
   }
 
@@ -69,6 +82,8 @@ export class BibliotecaComponent {
 
       return coincideBusqueda && coincideExperiencia && coincideContrato && coincideJornada && coincideModalidad;
     });
+
+    
   }
 
   experiencias: string[] = ['Todas', 'Junior', 'Intermedio', 'Senior'];
@@ -94,6 +109,7 @@ export class BibliotecaComponent {
     alert("postulacion enviada");
     this.modalAbierto = false;
   }
- 
+
+
 
 }

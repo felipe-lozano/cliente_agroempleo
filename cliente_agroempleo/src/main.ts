@@ -12,6 +12,7 @@ import { JobBoardComponent } from './app/pages/job-board/job-board.component';
 import { LearningComponent } from './app/pages/learning/learning.component';
 import { VideoModalComponent } from './app/pages/learning/video-modal/video-modal.component';
 import { PerfilComponent } from './app/pages/perfil/perfil.component';
+import { PostulacionComponent } from './app/pages/postulacion/postulacion.component';
 
 
 bootstrapApplication(AppComponent,{
@@ -33,7 +34,8 @@ bootstrapApplication(AppComponent,{
             {path: 'job', component: JobBoardComponent},
             {path: 'learning', component: LearningComponent},
             {path: 'video', component: VideoModalComponent},
-            {path: 'perfil', component: PerfilComponent}
+            {path: 'perfil', component: PerfilComponent},
+            {path: 'postulacion', component: PostulacionComponent},
 
            
 

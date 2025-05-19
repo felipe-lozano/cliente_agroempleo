@@ -174,3 +174,22 @@
     background-color: #fff;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
   }
+
+
+.user-profile {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 10px;
+}
+
+.user-name {
+  font-weight: bold;
+  color: #333;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}

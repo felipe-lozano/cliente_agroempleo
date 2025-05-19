@@ -104,7 +104,6 @@ export class RegisterComponent implements OnInit {
 
       console.log('Registro exitoso', this.registroForm.value);
       console.log('JSON formateado:\n', JSON.stringify(this.registroForm.value, null, 2));
-
       const json_register = JSON.stringify(this.registroForm.value);
 
       this.apiService.postData('registro', json_register).subscribe({
@@ -122,5 +121,4 @@ export class RegisterComponent implements OnInit {
       console.log('Formulario inválido');
     }
   }
-
 }

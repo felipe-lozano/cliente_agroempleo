@@ -1,0 +1,24 @@
+.formulario {
+  max-width: 850px;
+  margin: 5% auto 24px; /* ← margen superior de 60px */
+  padding: 24px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 16px;
+}
+
+.full-width {
+  width: 100%;
+  margin-top: 16px;
+}
+
+.button-container {
+  text-align: right;
+  margin-top: 24px;
+}

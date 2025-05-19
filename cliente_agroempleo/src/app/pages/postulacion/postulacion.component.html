@@ -1,0 +1,93 @@
+<app-user-header></app-user-header>
+
+<form [formGroup]="postulacionForm" (ngSubmit)="onSubmit()" class="formulario">
+  <div class="form-grid">
+    <mat-form-field appearance="outline">
+      <mat-label>Título del puesto</mat-label>
+      <input matInput formControlName="TituloPuesto" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Cargo</mat-label>
+      <input matInput formControlName="Cargo" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Salario</mat-label>
+      <input matInput  formControlName="Salario" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Número de vacantes</mat-label>
+      <input matInput formControlName="NumeroVacantes" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Modalidad</mat-label>
+      <mat-select formControlName="Modalidad">
+        <mat-option value="Presencial">Presencial</mat-option>
+        <mat-option value="Remoto">Remoto</mat-option>
+        <mat-option value="Híbrido">Híbrido</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Horario</mat-label>
+      <mat-select formControlName="Horario">
+        <mat-option value="Tiempo completo">Tiempo completo</mat-option>
+        <mat-option value="Medio tiempo">Medio tiempo</mat-option>
+        <mat-option value="Turnos rotativos">Turnos rotativos</mat-option>
+        <mat-option value="Freelance / Por proyecto">Freelance / Por proyecto</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Nivel requerido</mat-label>
+      <input matInput formControlName="NivelRequerido" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Experiencia requerida</mat-label>
+      <mat-select formControlName="ExperienciaRequrida">
+        <mat-option value="Menos de 6 meses">Menos de 6 meses</mat-option>
+        <mat-option value="6 meses o más">6 meses o más</mat-option>
+        <mat-option value="1 año o más">1 año o más</mat-option>
+        <mat-option value="2 años o más">2 años o más</mat-option>
+        <mat-option value="5 años o más">5 años o más</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Tipo de empleo</mat-label>
+      <mat-select formControlName="IdtipoempleoTipodeempleo">
+        <mat-option [value]="1">Indefinido</mat-option>
+        <mat-option [value]="3">Temporal</mat-option>
+        <mat-option [value]="4">Contrato</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Ciudad</mat-label>
+      <mat-select formControlName="Idciudadtrabajociudad">
+        <mat-option [value]="1">Bogotá</mat-option>
+        <mat-option [value]="2">Medellín</mat-option>
+        <mat-option [value]="3">Cali</mat-option>
+        <mat-option [value]="4">Barranquilla</mat-option>
+        <mat-option [value]="5">Cartagena</mat-option>
+        <mat-option [value]="6">Cúcuta</mat-option>
+        <mat-option [value]="7">Villavicencio</mat-option>
+        <mat-option [value]="8">San Gil</mat-option>
+        <mat-option [value]="9">Yopal</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Descripción del trabajo</mat-label>
+    <textarea matInput rows="4" formControlName="DescripcionTrabajo"></textarea>
+  </mat-form-field>
+
+  <div class="button-container">
+    <button mat-raised-button color="primary" type="submit">Postular Oferta</button>
+  </div>
+</form>

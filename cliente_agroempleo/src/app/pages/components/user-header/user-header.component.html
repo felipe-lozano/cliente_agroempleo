@@ -14,6 +14,10 @@
         <li><a routerLink="/contacto">Contacto</a></li>
         <li><a routerLink="/login">Login</a></li>
       </ul>
+      <div class="user-profile">
+        <span class="user-name">{{ Nombre }}</span>
+        <img [src]="avatarUrl" alt="Usuario" class="avatar" />
+      </div>
       <button class="mobileMenuButton" (click)="toggleMenu()">
         <span></span>
       </button>

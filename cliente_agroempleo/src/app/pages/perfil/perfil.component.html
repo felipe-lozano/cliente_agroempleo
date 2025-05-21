@@ -1,59 +1,37 @@
-<header>
-  <div class="wrap-container">
-    <div class="branding">
-      <img class="logo-lg" src="/logo.png" alt="Logo">
-      <span class="branding-text">Agroempleo</span>
-    </div>
+<app-user-header></app-user-header>
 
-    <nav class="menu">
-      <ul class="listMenu" [class.open]="isMenuOpen">
-      
-        <li><a routerLink="/home">Inicio</a></li>
-        <li><a routerLink="/biblioteca">Búsqueda de empleo</a></li>
-        <li><a routerLink="/contacto">Contacto</a></li>
-        <li><a routerLink="/login">Login</a></li>
+<div *ngIf="loading" class="loading">Cargando perfil...</div>
+<div *ngIf="error" class="error">{{ error }}</div>
+
+<div *ngIf="!loading && !error && user" class="profile-container">
+  <aside class="sidebar">
+    <div class="avatar-wrapper">
+      <img src="https://randomuser.me/api/portraits/men/75.jpg" alt="Foto de perfil de {{nombreCompleto()}}" class="avatar" />
+    </div>
+    <h1 class="name">{{ nombreCompleto() }}</h1>
+    <p class="location">📍 {{ ubicacionCompleta() }}</p>
+    <p class="dob">🎂 Edad: {{ calcularEdad(user.FechaNacimiento) }} años</p>
+  </aside>
+
+  <main class="profile-details">
+    <section class="bio-section card">
+      <h2>📄 Documento</h2>
+      <p><strong>Número:</strong> {{ user.NDocumento }}</p>
+      <p class="dob">
+        🎂 Edad:
+        <ng-container *ngIf="calcularEdad(user.FechaNacimiento) > 0; else noEdad">
+          {{ calcularEdad(user.FechaNacimiento) }} años
+        </ng-container>
+        <ng-template #noEdad>No disponible</ng-template>
+      </p>   
+ </section>
+
+    <section class="contact-section card">
+      <h2>📞 Contacto</h2>
+      <ul>
+        <li>📧 <strong>Email:</strong> <a href="mailto:{{ user.CorreoElectronico }}">{{ user.CorreoElectronico }}</a></li>
+        <li>📱 <strong>Teléfono:</strong> <a href="tel:+{{ user.Telefono }}">{{ user.Telefono }}</a></li>
       </ul>
-      <button class="mobileMenuButton" (click)="toggleMenu()">
-        <span></span>
-      </button>
-    </nav>
-  </div>
-</header>
-<body>
-
-<div class="perfil-container" *ngIf="usuario">
-  <div class="perfil-header">
-    <img [src]="usuario.foto" alt="Foto de perfil" class="foto-perfil" />
-    <div class="info-basica">
-      <h2>{{ usuario.nombre }}</h2>
-      <p>{{ usuario.ciudad }}</p>
-      <div class="contacto">
-        <p><i class="fa fa-envelope"></i> {{ usuario.email }}</p>
-        <p><i class="fa fa-phone"></i> {{ usuario.telefono }}</p>
-      </div>
-      <p class="titulo">{{ usuario.titulo }}</p>
-    </div>
-  </div>
-
-  <section>
-    <h3>Mis experiencias profesionales</h3>
-    <ul>
-      <li *ngFor="let exp of usuario.experiencias">
-        <strong>{{ exp.cargo }}</strong><br />
-        {{ exp.empresa }}<br />
-        {{ exp.periodo }}
-      </li>
-    </ul>
-  </section>
-
-  <section>
-    <h3>Mis estudios</h3>
-    <ul>
-      <li *ngFor="let edu of usuario.estudios">
-        <strong>{{ edu.titulo }}</strong><br />
-        {{ edu.institucion }}<br />
-        {{ edu.periodo }}
-      </li>
-    </ul>
-  </section>
+    </section>
+  </main>
 </div>

@@ -33,7 +33,7 @@ export class PerfilComponent implements OnInit {
   user?: UserProfile;
   loading = true;
   error = '';
-  userId = 24;
+  userId = 4;
 
   private apiUrl = 'http://localhost:8080/v1/Usuarios/' + this.userId;
 

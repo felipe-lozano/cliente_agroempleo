@@ -33,7 +33,7 @@ export class PerfilComponent implements OnInit {
   user?: UserProfile;
   loading = true;
   error = '';
-  userId = 13;
+  userId = 24;
 
   private apiUrl = 'http://localhost:8080/v1/Usuarios/' + this.userId;
 
@@ -53,23 +53,28 @@ export class PerfilComponent implements OnInit {
       }
     });
   }
-  calcularEdad(fechaNacimiento: string): number {
-    if (!fechaNacimiento) return 0; // No hay fecha, edad 0 o "sin datos"
+  calcularEdadDesdeString(fechaStr: string): number {
+    if (!fechaStr) return 0;
 
-    const fecha = new Date(fechaNacimiento);
-    if (isNaN(fecha.getTime())) return 0; // Fecha inválida
+    const partes = fechaStr.split('/');
+    if (partes.length !== 3) return 0;
+
+    const dia = parseInt(partes[0], 10);
+    const mes = parseInt(partes[1], 10) - 1; // los meses en JS van de 0 a 11
+    const anio = parseInt(partes[2], 10);
+
+    const fechaNacimiento = new Date(anio, mes, dia);
+    if (isNaN(fechaNacimiento.getTime())) return 0;
 
     const hoy = new Date();
-    let edad = hoy.getFullYear() - fecha.getFullYear();
-    const m = hoy.getMonth() - fecha.getMonth();
-
-    if (m < 0 || (m === 0 && hoy.getDate() < fecha.getDate())) {
+    let edad = hoy.getFullYear() - fechaNacimiento.getFullYear();
+    const m = hoy.getMonth() - fechaNacimiento.getMonth();
+    if (m < 0 || (m === 0 && hoy.getDate() < fechaNacimiento.getDate())) {
       edad--;
     }
+
     return edad;
   }
-
-
 
   nombreCompleto(): string {
     if (!this.user) return '';

@@ -10,7 +10,7 @@
     </div>
     <h1 class="name">{{ nombreCompleto() }}</h1>
     <p class="location">📍 {{ ubicacionCompleta() }}</p>
-    <p class="dob">🎂 Edad: {{ calcularEdad(user.FechaNacimiento) }} años</p>
+    <p class="dob">🎂 Edad: {{ calcularEdadDesdeString(user.FechaNacimiento) }} años</p>
   </aside>
 
   <main class="profile-details">
@@ -18,11 +18,9 @@
       <h2>📄 Documento</h2>
       <p><strong>Número:</strong> {{ user.NDocumento }}</p>
       <p class="dob">
-        🎂 Edad:
-        <ng-container *ngIf="calcularEdad(user.FechaNacimiento) > 0; else noEdad">
-          {{ calcularEdad(user.FechaNacimiento) }} años
-        </ng-container>
-        <ng-template #noEdad>No disponible</ng-template>
+        🎂 FechaNacimiento:
+        <span>{{ user.FechaNacimiento}}</span>
+     
       </p>   
  </section>
 

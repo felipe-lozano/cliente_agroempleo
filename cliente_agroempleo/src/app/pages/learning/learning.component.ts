@@ -97,35 +97,40 @@ export class LearningComponent implements OnInit {
     }
   ];
 
-  ngOnInit() {}
-
-  playVideo(event: any) {
-    const video = event.target as HTMLVideoElement;
-    video.currentTime = 0;
-    video.play();
-    video.setAttribute('controls', 'true');
-  }
-
-  pauseVideo(event: any) {
-    const video = event.target as HTMLVideoElement;
-    video.pause();
-    video.removeAttribute('controls');
-  }
-
-  toggleFavorito(curso: any) {
-    curso.favorito = !curso.favorito;
-  }
-
-  // 🔽 Nueva función agregada aquí
-  onFileSelected(event: Event): void {
-  const input = event.target as HTMLInputElement;
-
-  if (input.files && input.files.length > 0) {
-    const file = input.files[0];
-    console.log('📁 Archivo seleccionado:', file);
-
-    // Aquí podrías subir el archivo al servidor si tienes backend
+  ngOnInit() {
+  const favoritosGuardados = localStorage.getItem('favoritos');
+  if (favoritosGuardados) {
+    this.recomendaciones = JSON.parse(favoritosGuardados);
   }
 }
+
+  playVideo(event: MouseEvent): void {
+  const video = event.target as HTMLVideoElement;
+  video.play();
+}
+
+pauseVideo(event: MouseEvent): void {
+  const video = event.target as HTMLVideoElement;
+  video.pause();
+  video.currentTime = 0;
+}
+
+
+ toggleFavorito(curso: any): void {
+  curso.favorito = !curso.favorito;
+  localStorage.setItem('favoritos', JSON.stringify(this.recomendaciones));
+}
+
+
+  // 🔽 Nueva función agregada aquí
+ onFileSelected(event: any): void {
+  const file: File = event.target.files[0];
+  if (file && ['application/pdf', 'application/msword', 'text/plain', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'].includes(file.type)) {
+    // procesar archivo
+  } else {
+    alert("Formato de archivo no permitido.");
+  }
+}
+
 
 }

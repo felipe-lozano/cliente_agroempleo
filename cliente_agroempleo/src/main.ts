@@ -13,6 +13,7 @@ import { LearningComponent } from './app/pages/learning/learning.component';
 import { VideoModalComponent } from './app/pages/learning/video-modal/video-modal.component';
 import { PerfilComponent } from './app/pages/perfil/perfil.component';
 import { PostulacionComponent } from './app/pages/postulacion/postulacion.component';
+import { HojaDeVidaComponent } from './app/pages/hoja-de-vida/hoja-de-vida.component';
 
 
 bootstrapApplication(AppComponent,{
@@ -36,6 +37,7 @@ bootstrapApplication(AppComponent,{
             {path: 'video', component: VideoModalComponent},
             {path: 'perfil', component: PerfilComponent},
             {path: 'postulacion', component: PostulacionComponent},
+            {path: 'cv', component: HojaDeVidaComponent},
 
            
 

@@ -1,0 +1,64 @@
+.perfil-card {
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 2rem;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.perfil-container {
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.perfil-imagen {
+  flex: 1 1 250px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.imagen-previa img {
+  max-width: 200px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  margin-bottom: 1rem;
+}
+
+.subidas {
+  width: 100%;
+  text-align: center;
+}
+
+.subidas label {
+  display: block;
+  margin: 0.5rem 0;
+}
+
+.documento-previo {
+  margin-top: 0.5rem;
+}
+
+.perfil-formulario {
+  flex: 2;
+}
+
+mat-form-field {
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.botones {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1rem;
+}
+.visor-pdf {
+  margin-top: 1rem;
+  width: 100%;
+}

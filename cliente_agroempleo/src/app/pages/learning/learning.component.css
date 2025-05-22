@@ -67,16 +67,17 @@
 }
 
 .course-card {
-  display: inline-block;
-  width: 300px;
-  flex-shrink: 0;
-  transition: transform 0.3s ease-in-out;
-  position: relative;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  overflow: hidden;
 }
 
+
 .course-card:hover {
-  transform: scale(1.02);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
+  transform: translateY(-4px);
 }
+
 
 .video-hover {
   width: 100%;
@@ -104,4 +105,12 @@ mat-icon {
 .skills-input {
   width: 100%;
   max-width: 400px;
+}
+.upload-section button {
+  margin-top: 8px;
+  font-weight: bold;
+}
+.active-link {
+  background-color: #e0e0e0;
+  font-weight: bold;
 }

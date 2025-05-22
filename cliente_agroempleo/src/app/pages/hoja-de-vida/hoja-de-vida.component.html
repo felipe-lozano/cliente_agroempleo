@@ -1,0 +1,68 @@
+<mat-card class="perfil-card">
+  <h2>Mi Hoja de Vida</h2>
+
+  <div class="perfil-container">
+    <!-- Columna izquierda: Imagen y archivo -->
+    <div class="perfil-imagen">
+      <div *ngIf="imagenPrevia" class="imagen-previa">
+        <img [src]="imagenPrevia" alt="Imagen de perfil" />
+      </div>
+
+      <div class="subidas">
+        <label>
+          <strong>Subir imagen:</strong>
+          <input type="file" (change)="seleccionarImagen($event)" />
+        </label>
+
+        <label>
+          <strong>Subir documento PDF:</strong>
+          <input type="file" accept=".pdf" (change)="seleccionarDocumento($event)" />
+        </label>
+
+        <div *ngIf="documentoUrl" class="visor-pdf">
+          <h4>Vista previa del documento:</h4>
+          <iframe
+            [src]="documentoUrl | safeUrl"
+            width="100%"
+            height="300"
+            style="border: 1px solid #ccc; border-radius: 8px;"
+          ></iframe>
+        </div>
+      </div>
+    </div>
+
+    <!-- Columna derecha: Formulario -->
+    <!-- <div class="perfil-formulario">
+      <form [formGroup]="perfilForm" (ngSubmit)="guardarCambios()">
+        <mat-form-field appearance="outline">
+          <mat-label>Nombre completo</mat-label>
+          <input matInput formControlName="nombre" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Correo electrónico</mat-label>
+          <input matInput type="email" formControlName="correo" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Teléfono</mat-label>
+          <input matInput formControlName="telefono" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Dirección</mat-label>
+          <input matInput formControlName="direccion" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Descripción Profesional</mat-label>
+          <textarea matInput formControlName="descripcion"></textarea>
+        </mat-form-field>
+
+        <div class="botones">
+          <button mat-raised-button color="primary" type="submit">Guardar</button>
+        </div>
+      </form>
+    </div> -->
+  </div>
+</mat-card>

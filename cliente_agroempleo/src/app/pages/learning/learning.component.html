@@ -4,33 +4,24 @@
   <span class="spacer"></span>
   <span class="usuario">{{ usuario }}</span>
 </mat-toolbar>
+
 <mat-sidenav-container class="sidenav-container">
   <mat-sidenav mode="side" opened class="sidenav">
     <mat-nav-list>
-      <mat-list-item>Inicio</mat-list-item>
-      <mat-list-item>Busqueda de empleo</mat-list-item>
-      <mat-list-item>Mi biblioteca</mat-list-item>
-      <mat-list-item>Login</mat-list-item>
-      <mat-list-item>Cvd</mat-list-item>
-    </mat-nav-list>
+  <a mat-list-item routerLink="/home">Inicio</a>
+  <a mat-list-item routerLink="/biblioteca">Mi biblioteca</a>
+  <a mat-list-item routerLink="/login">Login</a>
+  <a mat-list-item routerLink="/cv">CV</a>
+</mat-nav-list>
+
   </mat-sidenav>
+<a mat-list-item routerLink="/home" routerLinkActive="active-link">Inicio</a>
 
   <mat-sidenav-content>
     <div class="welcome-section">
       <h1>{{ usuario }}, mejora tus aptitudes y avanza en tu carrera con Agroempleo Learning</h1>
     </div>
-    <div class="upload-section" style="margin: 16px;">
-  <button mat-raised-button color="primary" (click)="fileInput.click()">Subir Cdv</button>
-  <input
-    type="file"
-    hidden
-    #fileInput
-    (change)="onFileSelected($event)"
-    accept=".pdf,.doc,.docx,.txt"
-  />
-</div>
-
-
+  
     <div class="selection-buttons">
       <mat-form-field appearance="fill">
         <mat-label>Cursos</mat-label>
@@ -39,7 +30,6 @@
           <mat-option value="Excel">Excel</mat-option>
           <mat-option value="Inglés">Inglés</mat-option>
           <mat-option value="Angular">Angular</mat-option>
-
         </mat-select>
       </mat-form-field>
 
@@ -47,7 +37,7 @@
         <mat-label>Nivel</mat-label>
         <mat-select [(ngModel)]="filtroNivel">
           <mat-option value="">Todos</mat-option>
-          <mat-option value="Básico">Básico</mat-option>
+          <mat-option value="Basico">Básico</mat-option>
           <mat-option value="Intermedio">Intermedio</mat-option>
           <mat-option value="Avanzado">Avanzado</mat-option>
         </mat-select>
@@ -59,19 +49,12 @@
           <mat-option value="">Todos</mat-option>
           <mat-option value="min">Menos de 30 Minutos</mat-option>
           <mat-option value="min">30-60 Minutos</mat-option>
-          <mat-option value="h">1-3 Horas</mat-option>
-          <mat-option value="h">Más de 3 horas</mat-option>
+          <mat-option value="1a3">1-3 Horas</mat-option>
+          <mat-option value="mas3">Más de 3 horas</mat-option>
         </mat-select>
       </mat-form-field>
 
-      <mat-form-field appearance="fill">
-        <mat-label>Autor</mat-label>
-        <mat-select [(ngModel)]="filtroExtra">
-          <mat-option value="">Todos</mat-option>
-          <mat-option value="Isabel">Isabel</mat-option>
-          <mat-option value="Jordi">Jordi</mat-option>
-        </mat-select>
-      </mat-form-field>
+
 
       <mat-form-field appearance="fill">
         <mat-label>Favoritos</mat-label>
@@ -82,35 +65,38 @@
         </mat-select>
       </mat-form-field>
     </div>
-
     <div class="course-recommendations">
       <h2>Principales recomendaciones para {{ usuario }}</h2>
 
       <div class="carousel-wrapper">
         <div class="carousel">
-          <mat-card *ngFor="let curso of recomendaciones | filtroCursos:filtroCurso:filtroNivel:filtroTiempo:filtroExtra:filtroFavoritos" class="course-card">
-            <video 
-              [src]="curso.videoUrl" 
+          <mat-card
+            *ngFor="let curso of recomendaciones | filtroCursos:filtroCurso:filtroNivel:filtroTiempo:filtroExtra:filtroFavoritos"
+            class="course-card"
+          >
+            <video
+              [src]="curso.videoUrl"
               muted
-              (mouseenter)="playVideo($event)" 
+              (mouseenter)="playVideo($event)"
               (mouseleave)="pauseVideo($event)"
               class="video-hover"
             ></video>
             <mat-card-title>{{ curso.titulo }}</mat-card-title>
             <mat-card-subtitle>Por: {{ curso.autor }}</mat-card-subtitle>
             <p>Duración: {{ curso.duracion }}</p>
-            <button mat-icon-button (click)="toggleFavorito(curso)" [color]="curso.favorito ? 'warn' : 'default'" aria-label="Favorito">
+            <button
+              mat-icon-button
+              (click)="toggleFavorito(curso)"
+              [color]="curso.favorito ? 'warn' : 'default'"
+              aria-label="Favorito"
+            >
               <mat-icon>{{ curso.favorito ? 'favorite' : 'favorite_border' }}</mat-icon>
             </button>
-          </mat-card> 
+          </mat-card>
         </div>
       </div>
     </div>
-    <div class="skills-section">
-      <h3>Identifica las aptitudes necesarias para avanzar en tu carrera</h3>
-      <mat-form-field appearance="outline" class="skills-input">
-        <input matInput placeholder="Gerente de productos">
-      </mat-form-field>
-    </div>
+
+   
   </mat-sidenav-content>
-</mat-sidenav-container> 
+</mat-sidenav-container>

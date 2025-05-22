@@ -4,6 +4,9 @@ import { UserHeaderComponent } from '../components/user-header/user-header.compo
 import { FormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 import { RecuperarComponent } from '../recuperar/recuperar.component';
+import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
+
 
 const routes: Routes = [
   { path: 'recuperar', component: RecuperarComponent },
@@ -17,12 +20,14 @@ const routes: Routes = [
       CommonModule,
       UserHeaderComponent,
       FormsModule,
+      RouterModule,
       RouterModule
     ],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent {
+  constructor(private http: HttpClient, private router: Router) {}
   email = '';
   password = '';
   rememberMe = false;
@@ -39,6 +44,18 @@ export class LoginComponent {
       password: this.password,
       rememberMe: this.rememberMe,
     });
+
+    const url = 'http://localhost:8080/v1/Usuarios?query=CorreoElectronico:' + this.email;
+    this.http.get<any>(url).subscribe({
+      next: res => {
+        console.log('✔️ Usuario encontrado', res);
+        this.password = res.contrasena;
+        this.router.navigate(['/biblioteca']);
+        },
+      error: err => {
+        console.error('❌ Error al buscar usuario', err);
+    }})
+    
   }
   recoverPassword(){
     alert('recuperando contraseña...');

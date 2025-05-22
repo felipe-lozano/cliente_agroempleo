@@ -87,8 +87,8 @@ export class BibliotecaComponent {
   }
 
   experiencias: string[] = ['Todas', 'Junior', 'Intermedio', 'Senior'];
-  tiposContrato: string[] = ['Todos', 'indefinido', 'Temporal', 'Freelance'];
-  ciudad: string[] = ['Todas','Bogotá','Medellín','Cali','Barranquilla','Cartagena','Cúcuta','Santa Marta','Villavicencio','San Gil'];
+  tiposContrato: string[] = ['Todos', 'Indefinido', 'Temporal', 'Freelance'];
+  ciudad: string[] = ['Todas','Bogota','Medellín','Cali','Barranquilla','Cartagena','Cúcuta','Santa Marta','Villavicencio','San Gil','yopal'];
   modalidades: string[] = ['Todas', 'Remoto', 'Presencial', 'Híbrido'];
 
   modalAbierto = false;

@@ -31,8 +31,9 @@ import { UserHeaderComponent } from "../components/user-header/user-header.compo
 })
 export class PostulacionComponent {
  postulacionForm!: FormGroup;
+ 
 
-  constructor(private fb: FormBuilder, private http: HttpClient) {
+  constructor(private fb: FormBuilder, private http: HttpClient ) {
    this.postulacionForm = this.fb.group({
     TituloPuesto: ['', Validators.required],
     Cargo: ['', Validators.required],

@@ -8,7 +8,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSelectModule } from '@angular/material/select';
 import { Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
 import { ApiService } from '../../../Services/api.services';
 import { FormsModule } from '@angular/forms';
 

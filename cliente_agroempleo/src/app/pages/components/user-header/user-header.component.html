@@ -1,27 +1,32 @@
-
 <header>
   <div class="wrap-container">
+    <!-- Branding -->
     <div class="branding">
       <img class="logo-lg" src="/logo.png" alt="Logo">
       <span class="branding-text">Agroempleo</span>
     </div>
 
+    <!-- Menú de navegación centrado -->
     <nav class="menu">
       <ul class="listMenu" [class.open]="isMenuOpen">
-      
         <li><a routerLink="/home">Inicio</a></li>
         <li><a routerLink="/biblioteca">Búsqueda de empleo</a></li>
-        <li><a routerLink="/contacto">Contacto</a></li>
-        <li><a routerLink="/login">Login</a></li>
+        <li><a routerLink="/postulacion">Nueva vacante</a></li>
       </ul>
-      <div class="user-profile">
-        <span class="user-name">{{ Nombre }}</span>
-        <img [src]="avatarUrl" alt="Usuario" class="avatar" />
-      </div>
       <button class="mobileMenuButton" (click)="toggleMenu()">
         <span></span>
       </button>
     </nav>
+
+    <!-- Perfil de usuario -->
+    <div class="user-profile">
+      <a  routerLink="/perfil">{{ Nombre }}</a>
+      <img [src]="avatarUrl" alt="Usuario" class="avatar" />
+    </div>
   </div>
 </header>
-<body>
+
+<main class="main-content">
+  <!-- Aquí va todo el contenido que debe aparecer debajo del header -->
+  <router-outlet></router-outlet>
+</main>

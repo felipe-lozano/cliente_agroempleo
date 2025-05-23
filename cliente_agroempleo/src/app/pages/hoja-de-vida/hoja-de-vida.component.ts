@@ -6,6 +6,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { SafeUrlPipe } from './safe-url.pipe'; // <-- Asegúrate que la ruta sea correcta
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-hoja-de-vida',
@@ -17,7 +18,8 @@ import { SafeUrlPipe } from './safe-url.pipe'; // <-- Asegúrate que la ruta sea
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
-    SafeUrlPipe // <-- Importa aquí el pipe
+    SafeUrlPipe ,// <-- Importa aquí el pipe
+    MatIconModule
   ],
   templateUrl: './hoja-de-vida.component.html',
   styleUrls: ['./hoja-de-vida.component.css']

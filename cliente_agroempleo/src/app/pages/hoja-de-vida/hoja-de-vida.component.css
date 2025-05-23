@@ -1,31 +1,30 @@
 .perfil-card {
-  max-width: 900px;
+  max-width: 960px;
   margin: 2rem auto;
   padding: 2rem;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
 }
 
-h2 {
+.titulo-card {
   text-align: center;
+  font-size: 1.8rem;
+  font-weight: bold;
   margin-bottom: 2rem;
+  color: #37a737;
 }
 
 .perfil-container {
   display: flex;
-  flex-direction: row;
   gap: 2rem;
   flex-wrap: wrap;
 }
 
-.perfil-imagen {
-  flex: 1 1 250px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
 
 .imagen-previa img {
-  max-width: 200px;
-  border-radius: 12px;
+  max-width: 220px;
+  border-radius: 16px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   margin-bottom: 1rem;
 }
@@ -33,15 +32,22 @@ h2 {
 .subidas {
   width: 100%;
   text-align: center;
+  margin-top: 1rem;
 }
 
-.subidas label {
+.subidas mat-label {
   display: block;
+  font-weight: bold;
+  margin-top: 0.5rem;
+}
+
+input[type="file"] {
   margin: 0.5rem 0;
 }
 
-.documento-previo {
-  margin-top: 0.5rem;
+.visor-pdf {
+  margin-top: 1rem;
+  width: 100%;
 }
 
 .perfil-formulario {
@@ -56,9 +62,19 @@ mat-form-field {
 .botones {
   display: flex;
   justify-content: flex-end;
-  margin-top: 1rem;
+  margin-top: 1.5rem;
 }
-.visor-pdf {
-  margin-top: 1rem;
-  width: 100%;
+.branding {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.logo-lg {
+  height: 40px;
+}
+.branding-text {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #333;
 }

@@ -1,68 +1,54 @@
 <mat-card class="perfil-card">
-  <h2>Mi Hoja de Vida</h2>
+  <div class="branding">
+    <img class="logo-lg" src="/logo.png" alt="Logo" />
+    <span class="branding-text">Agroempleo</span>
+  </div>
+  
+  <div class="botones">
+  <button mat-raised-button color="primary" (click)="guardarCambios()">Guardar</button>
+</div>
+
+
+
+  <h2 class="titulo-card">Mi Hoja de Vida</h2>
 
   <div class="perfil-container">
-    <!-- Columna izquierda: Imagen y archivo -->
-    <div class="perfil-imagen">
+  <!-- LADO IZQUIERDO: PDF -->
+  <div class="columna izquierda">
+    <div class="upload-section">
+      <mat-label><strong>Subir documento PDF:</strong></mat-label>
+      <input type="file" accept=".pdf" (change)="seleccionarDocumento($event)" />
+    </div>
+
+    <div *ngIf="documentoUrl" class="visor-pdf">
+      <h4>📑 Vista previa del documento</h4>
+      <iframe
+        [src]="documentoUrl | safeUrl"
+        width="100%"
+        height="400"
+        style="border: 1px solid #ccc; border-radius: 8px;"
+      ></iframe>
+    </div>
+  </div>
+
+  <!-- LADO DERECHO: Imagen -->
+  <div class="columna derecha">
+    <div class="upload-section">
+      <mat-label><strong>Subir Foto:</strong></mat-label>
+      <input type="file" (change)="seleccionarImagen($event)" />
+    </div>
+
+    <div *ngIf="imagenPrevia" class="imagen-previa">
+      <img [src]="imagenPrevia" alt="Imagen de perfil" />
+    </div>
+  </div>
+</div>
+
+    <!-- Columna derecha: imagen y carga -->
+    <div class="columna derecha">
       <div *ngIf="imagenPrevia" class="imagen-previa">
         <img [src]="imagenPrevia" alt="Imagen de perfil" />
       </div>
-
-      <div class="subidas">
-        <label>
-          <strong>Subir imagen:</strong>
-          <input type="file" (change)="seleccionarImagen($event)" />
-        </label>
-
-        <label>
-          <strong>Subir documento PDF:</strong>
-          <input type="file" accept=".pdf" (change)="seleccionarDocumento($event)" />
-        </label>
-
-        <div *ngIf="documentoUrl" class="visor-pdf">
-          <h4>Vista previa del documento:</h4>
-          <iframe
-            [src]="documentoUrl | safeUrl"
-            width="100%"
-            height="300"
-            style="border: 1px solid #ccc; border-radius: 8px;"
-          ></iframe>
-        </div>
-      </div>
     </div>
-
-    <!-- Columna derecha: Formulario -->
-    <!-- <div class="perfil-formulario">
-      <form [formGroup]="perfilForm" (ngSubmit)="guardarCambios()">
-        <mat-form-field appearance="outline">
-          <mat-label>Nombre completo</mat-label>
-          <input matInput formControlName="nombre" />
-        </mat-form-field>
-
-        <mat-form-field appearance="outline">
-          <mat-label>Correo electrónico</mat-label>
-          <input matInput type="email" formControlName="correo" />
-        </mat-form-field>
-
-        <mat-form-field appearance="outline">
-          <mat-label>Teléfono</mat-label>
-          <input matInput formControlName="telefono" />
-        </mat-form-field>
-
-        <mat-form-field appearance="outline">
-          <mat-label>Dirección</mat-label>
-          <input matInput formControlName="direccion" />
-        </mat-form-field>
-
-        <mat-form-field appearance="outline">
-          <mat-label>Descripción Profesional</mat-label>
-          <textarea matInput formControlName="descripcion"></textarea>
-        </mat-form-field>
-
-        <div class="botones">
-          <button mat-raised-button color="primary" type="submit">Guardar</button>
-        </div>
-      </form>
-    </div> -->
-  </div>
+  
 </mat-card>

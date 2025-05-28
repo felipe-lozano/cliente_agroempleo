@@ -22,7 +22,7 @@ export class UserHeaderComponent {
   constructor(private usuarioService: UsuarioService) {}
 
   ngOnInit(): void {
-    const usuarioId: number = 4;
+    const usuarioId: number = 24;
     console.log("ngOnInit cargado");
 
     this.usuarioService.obtenerUsuario(usuarioId).subscribe(usuario => {

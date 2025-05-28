@@ -54,7 +54,14 @@ export class LoginComponent {
         },
       error: err => {
         console.error('❌ Error al buscar usuario', err);
+
     }})
+  
+    
+    //valida la contraseña de los datos cargados del usuario encontrado con la ingresada por el usuario al cliente
+    
+   
+    
     
   }
   recoverPassword(){

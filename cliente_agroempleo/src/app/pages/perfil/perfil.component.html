@@ -11,18 +11,20 @@
     <h1 class="name">{{ nombreCompleto() }}</h1>
     <p class="location">📍 {{ ubicacionCompleta() }}</p>
     <p class="dob">🎂 Edad: {{ calcularEdadDesdeString(user.FechaNacimiento) }} años</p>
+    <p class="dob">Tipo de usuario: {{ user.IdRolRol.Nombre }}</p>
   </aside>
 
   <main class="profile-details">
     <section class="bio-section card">
       <h2>📄 Documento</h2>
+      <p><strong>Tipo de documento:</strong> {{ user.IdTipoDocumentoTipoDocumento.Nombre }} </p>
       <p><strong>Número:</strong> {{ user.NDocumento }}</p>
       <p class="dob">
-        🎂 FechaNacimiento:
-        <span>{{ user.FechaNacimiento}}</span>
-     
-      </p>   
- </section>
+        🎂 Fecha de nacimiento:
+        <span>{{ user.FechaNacimiento }}</span>
+      </p>
+      <h2>Tipo de usuario</h2>
+    </section>
 
     <section class="contact-section card">
       <h2>📞 Contacto</h2>
@@ -32,4 +34,22 @@
       </ul>
     </section>
   </main>
+</div>
+
+<!-- ✅ Mostrar solo si el usuario es empleador -->
+<div *ngIf="user?.IdRolRol?.Nombre === 'Empleador'" class="postulaciones-inferior">
+  <h2>📋 Postulaciones Realizadas</h2>
+
+  <div *ngIf="postulaciones.length === 0" class="mensaje-vacio">
+    No hay postulaciones registradas aún.
+  </div>
+
+  <div *ngFor="let p of postulaciones" class="postulacion-card">
+    <h3>{{ p.TituloPuesto }}</h3>
+    <p><strong>Postulado:</strong> {{ p.NombrePostulado }}</p>
+
+    <button *ngIf="p.ArchivoCV" (click)="descargarArchivo(p.ArchivoCV, p.NombrePostulado)">
+      📎 Descargar CV
+    </button>
+  </div>
 </div>

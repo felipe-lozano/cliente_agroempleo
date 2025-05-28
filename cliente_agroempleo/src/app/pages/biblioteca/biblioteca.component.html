@@ -59,6 +59,13 @@
         <p><strong>Tipo de empleo:</strong> {{ ofertaSeleccionada?.TipoEmpleo }}</p>
         <p><strong>Ciudad:</strong> {{ ofertaSeleccionada?.Ciudad }}</p>
         <p><strong>Publicado por:</strong> {{ ofertaSeleccionada?.publicado_por }}</p>
+
+        <!-- Input para subir archivo PDF -->
+        <label for="cvUpload" class="custom-file-upload">
+        <strong>Sube tu CV en PDF:</strong>
+        </label>
+        <input type="file" id="cvUpload" (change)="onFileSelected($event)" accept="application/pdf" />
+
     
         <button class="ver-btn"(click)="cerrarModal()">Cerrar</button>
         <button class="ver-btn" (click)="Postularme()">Postularme</button>

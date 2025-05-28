@@ -7,9 +7,10 @@ import { RouterModule } from '@angular/router';
 import { EmpleoService } from '../../../empleo.service';
 import { UsuarioService } from '../../../usuario.service';
 import { UserHeaderComponent } from "../components/user-header/user-header.component";
-
+import { HttpClient } from '@angular/common/http';
 
 interface OfertaLaboral {
+  id: number;
   TituloPuesto: string;
   DescripcionTrabajo: string;
   Cargo: string;
@@ -29,17 +30,18 @@ interface OfertaLaboral {
     CommonModule,
     FormsModule,
     RouterModule,
-    UserHeaderComponent
+    UserHeaderComponent,
+    
+    
 ],
   templateUrl: './biblioteca.component.html',
   styleUrl: './biblioteca.component.css'
 })
 export class BibliotecaComponent {
   isMenuOpen = false;
-
-  Nombre: string = '';
-  avatarUrl: string = '/img.png';
-
+  IdUsuarios = 7;
+  archivoPDF: File | null = null;
+  base64CV: string | null = null;
 
   terminoBusqueda: string = '';
   filtroExperiencia: string = 'Todas';
@@ -49,7 +51,7 @@ export class BibliotecaComponent {
 
   ofertas: OfertaLaboral[] = [];
 
-  constructor(private empleoService: EmpleoService, private usuarioService: UsuarioService) {}
+  constructor(private empleoService: EmpleoService, private usuarioService: UsuarioService, private http: HttpClient) {}
 
   ngOnInit ()  {
     this.empleoService.obtenerOfertas().subscribe((data: any) => {
@@ -58,15 +60,8 @@ export class BibliotecaComponent {
       console.log(JSON.stringify(this.ofertas, null, 2));
     });
 
-    const usuarioId = 1;
-    console.log("ngOnInit cargado");
 
-    this.usuarioService.obtenerUsuario(usuarioId).subscribe(usuario => {
-    console.log("Usuario obtenido:", usuario);
-    this.Nombre = usuario["Consulta de id"].Nombre;
-    this.avatarUrl = usuario.avatar || '/img.png';
-    console.log("Nombre:", this.Nombre);
-    });
+   
   }
 
   get ofertasFiltradas(): OfertaLaboral[] {
@@ -104,12 +99,59 @@ export class BibliotecaComponent {
     this.modalAbierto = false;
     this.ofertaSeleccionada = null;
   }
-  Postularme() {
-    console.log("hola");
-    alert("postulacion enviada");
-    this.modalAbierto = false;
+
+  
+  onFileSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+
+    if (input.files && input.files.length > 0) {
+      const file = input.files[0];
+
+      const reader = new FileReader();
+      reader.onload = () => {
+        const result = reader.result as string;
+        this.base64CV = result.split(',')[1]; // solo el base64 sin encabezado
+        console.log('Base64 del CV:', this.base64CV);
+      };
+
+      reader.onerror = error => {
+        console.error('Error al leer el archivo:', error);
+      };
+
+      reader.readAsDataURL(file); // convierte a base64
+    }
   }
 
+  Postularme() {
+    if (!this.base64CV || !this.ofertaSeleccionada) {
+      alert('Por favor, selecciona un archivo PDF antes de postularte.');
+      return;
+    }
+
+    const payload = {
+      IdUsuarios: this.IdUsuarios,
+      IdEmpleo: this.ofertaSeleccionada.id,
+      SoporteCv: this.base64CV
+    };
+
+
+
+    console.log('JSON a enviar:', payload);
+    
+    const json_register = JSON.stringify(payload);
+    console.log('JSON formateado:\n', json_register);
+
+    this.http.post('http://localhost:8087/v1/postulaciones', payload).subscribe({
+      next: (res) => {
+        alert('¡Postulación con base64 exitosa!');
+        this.cerrarModal();
+      },
+      error: (err) => {
+        console.error('Error al postularse:', err);
+        alert('Ocurrió un error al postularse.');
+      }
+    });
+  }
 
 
 }

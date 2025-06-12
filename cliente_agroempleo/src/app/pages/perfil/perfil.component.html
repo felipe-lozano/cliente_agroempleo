@@ -1,55 +1,143 @@
 <app-user-header></app-user-header>
 
-<div *ngIf="loading" class="loading">Cargando perfil...</div>
-<div *ngIf="error" class="error">{{ error }}</div>
+<div class="perfil-container" *ngIf="!loading">
+  <h1>👤 Perfil de Usuario</h1>
 
-<div *ngIf="!loading && !error && user" class="profile-container">
-  <aside class="sidebar">
-    <div class="avatar-wrapper">
-      <img src="https://randomuser.me/api/portraits/men/75.jpg" alt="Foto de perfil de {{nombreCompleto()}}" class="avatar" />
+  <!-- Información del perfil -->
+  <section class="perfil-info card">
+    <p><strong>Nombre completo:</strong> {{ nombreCompleto() }}</p>
+    <p><strong>Edad:</strong> {{ calcularEdadDesdeString(user?.FechaNacimiento || '') }} años</p>
+    <p><strong>Correo electrónico:</strong> {{ user?.CorreoElectronico }}</p>
+    <p><strong>Teléfono:</strong> {{ user?.Telefono }}</p>
+    <p><strong>Ubicación:</strong> {{ ubicacionCompleta() }}</p>
+    <p><strong>Tipo de documento:</strong> {{ tipo_documento?.Nombre }}</p>
+    <p><strong>Tipo de usuario:</strong> {{ tipo_usuario?.Nombre }}</p>
+    <div class="botones-acciones">
+      <button (click)="abrirModalEditar()">✏️ Editar Perfil</button>
+      <button class="btn-eliminar" (click)="eliminarPerfil()">🗑️ Eliminar Perfil</button>
     </div>
-    <h1 class="name">{{ nombreCompleto() }}</h1>
-    <p class="location">📍 {{ ubicacionCompleta() }}</p>
-    <p class="dob">🎂 Edad: {{ calcularEdadDesdeString(user.FechaNacimiento) }} años</p>
-    <p class="dob">Tipo de usuario: {{ user.IdRolRol.Nombre }}</p>
-  </aside>
+  </section>
 
-  <main class="profile-details">
-    <section class="bio-section card">
-      <h2>📄 Documento</h2>
-      <p><strong>Tipo de documento:</strong> {{ user.IdTipoDocumentoTipoDocumento.Nombre }} </p>
-      <p><strong>Número:</strong> {{ user.NDocumento }}</p>
-      <p class="dob">
-        🎂 Fecha de nacimiento:
-        <span>{{ user.FechaNacimiento }}</span>
-      </p>
-      <h2>Tipo de usuario</h2>
-    </section>
+  <!-- Vacantes publicadas (solo empleador) -->
+  <section *ngIf="user?.IdRolRol?.Nombre === 'Empleador'">
+    <h2>📢 Vacantes Publicadas</h2>
+    <button (click)="abrirModalVacantes()" class="btn-ver-mas">Ver vacantes publicadas</button>
 
-    <section class="contact-section card">
-      <h2>📞 Contacto</h2>
-      <ul>
-        <li>📧 <strong>Email:</strong> <a href="mailto:{{ user.CorreoElectronico }}">{{ user.CorreoElectronico }}</a></li>
-        <li>📱 <strong>Teléfono:</strong> <a href="tel:+{{ user.Telefono }}">{{ user.Telefono }}</a></li>
-      </ul>
-    </section>
-  </main>
-</div>
+    <!-- Modal Vacantes -->
+    <div class="modal" *ngIf="modalVacantesAbiertas">
+      <div class="modal-contenido">
+        <button class="modal-close-btn" (click)="cerrarModalVacantes()">×</button>
+        <h2>Vacantes Publicadas</h2>
+        <div *ngIf="vacantes.length === 0" class="mensaje-vacio">
+          No tienes vacantes publicadas.
+        </div>
+        <div *ngIf="vacantes.length > 0" class="vacantes-lista">
+          <article *ngFor="let vacante of vacantes" class="card">
+            <h3>{{ vacante.TituloPuesto }}</h3>
+            <p>{{ vacante.DescripcionTrabajo }}</p>
+            <button (click)="verDetalleVacante(vacante)">🔍 Ver Detalles</button>
 
-<!-- ✅ Mostrar solo si el usuario es empleador -->
-<div *ngIf="user?.IdRolRol?.Nombre === 'Empleador'" class="postulaciones-inferior">
-  <h2>📋 Postulaciones Realizadas</h2>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
 
-  <div *ngIf="postulaciones.length === 0" class="mensaje-vacio">
-    No hay postulaciones registradas aún.
+  <!-- Modal Detalle Vacante -->
+  <div class="modal" *ngIf="modalDetalleVacanteAbierta && vacanteSeleccionada">
+    <div class="modal-contenido">
+      <button class="modal-close-btn" (click)="cerrarModalDetalleVacante()">x</button>
+      <h2>📄 Detalle de la Vacante</h2>
+      <p><strong>Título:</strong> {{ vacanteSeleccionada.TituloPuesto }}</p>
+      <p><strong>Descripción:</strong> {{ vacanteSeleccionada.DescripcionTrabajo }}</p>
+      <p><strong>Cargo:</strong> {{ vacanteSeleccionada.Cargo }}</p>
+      <p><strong>Salario:</strong> {{ vacanteSeleccionada.Salario }}</p>
+      <p><strong>Modalidad:</strong> {{ vacanteSeleccionada.Modalidad }}</p>
+      <p><strong>Nivel Requerido:</strong> {{ vacanteSeleccionada.NivelRequerido }}</p>
+      <p><strong>Experiencia:</strong> {{ vacanteSeleccionada.ExperienciaRequrida }}</p>
+      <p><strong>Vacantes:</strong> {{ vacanteSeleccionada.NumeroVacantes }}</p>
+      <p><strong>Tipo de empleo:</strong> {{ vacanteSeleccionada.TipoEmpleo }}</p>
+      <p><strong>Ciudad:</strong> {{ vacanteSeleccionada.Ciudad }}</p>
+      <p><strong>Publicado por:</strong> {{ vacanteSeleccionada.publicado_por }}</p>
+
+      <div class="botones-acciones">
+        <button class="btn-eliminar" (click)="eliminarVacante(vacanteSeleccionada.id)">🗑️ Eliminar Vacante</button>
+        <button class="btn-terminar" (click)="terminarVacante(vacanteSeleccionada.id)">✅ Terminar Vacante</button>
+      </div>
+    </div>
   </div>
 
-  <div *ngFor="let p of postulaciones" class="postulacion-card">
-    <h3>{{ p.TituloPuesto }}</h3>
-    <p><strong>Postulado:</strong> {{ p.NombrePostulado }}</p>
+  <!-- Aspirantes postulados (solo empleador) -->
+  <section *ngIf="user?.IdRolRol?.Nombre === 'Empleador'">
+    <h2>📋 Aspirantes Postulados</h2>
+    <button (click)="abrirModalPostulantes()" class="btn-ver-mas">Ver aspirantes postulados</button>
 
-    <button *ngIf="p.ArchivoCV" (click)="descargarArchivo(p.ArchivoCV, p.NombrePostulado)">
-      📎 Descargar CV
-    </button>
+    <!-- Modal Postulantes -->
+    <div class="modal" *ngIf="modalPostulantesAbierto">
+      <div class="modal-contenido">
+        <button class="modal-close-btn" (click)="cerrarModalPostulantes()">×</button>
+        <h2>Aspirantes Postulados</h2>
+        <div *ngIf="postulacionesFiltradas.length === 0" class="mensaje-vacio">
+          No hay postulaciones registradas aún.
+        </div>
+        <div *ngIf="postulacionesFiltradas.length > 0" class="postulaciones-lista">
+          <article *ngFor="let vacante of postulacionesFiltradas" class="postulacion-card card">
+            <h3><strong>Oferta:</strong> {{ vacante.TituloPuesto }}</h3>
+            <div *ngFor="let postulante of vacante.postulantes">
+              <p><strong>Postulado:</strong> {{ postulante.NombrePostulado }}</p>
+              <div class="botones-acciones">
+                <button *ngIf="postulante.ArchivoCV" (click)="descargarArchivo(postulante.ArchivoCV, postulante.NombrePostulado)">📎 Descargar CV</button>
+                <button *ngIf="postulante.ArchivoCV" (click)="verPdf(postulante.ArchivoCV)">👁️ Ver CV</button>
+                <button (click)="eliminarPostulacionesDeVacante(postulante.Id)">🗑️ Eliminar postulación</button>
+
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Postulaciones del Aspirante -->
+  <section *ngIf="user?.IdRolRol?.Nombre === 'Aspirante'">
+    <h2>📋 Tus postulaciones</h2>
+    <div *ngIf="postulacionesFiltradas.length === 0" class="mensaje-vacio">
+      No hay postulaciones registradas aún.
+    </div>
+    <div *ngIf="postulacionesFiltradas.length > 0" class="postulaciones-lista">
+      <article *ngFor="let p of postulacionesFiltradas" class="postulacion-card card">
+        <h3><strong>Oferta:</strong> {{ p.TituloPuesto }}</h3>
+        <p><strong>Empleador:</strong> {{ p.NombrePostulado1 }}</p>
+        <button class="btn-eliminar" (click)="eliminarPostulacion(p.Id)">🗑️ Eliminar Postulación</button>
+      </article>
+    </div>
+  </section>
+
+  <!-- Modal Editar Perfil -->
+  <div class="modal" *ngIf="editando">
+    <div class="modal-contenido">
+      <button class="modal-close-btn" (click)="cerrarModal()">×</button>
+      <h2>Editar Perfil</h2>
+      <form [formGroup]="editForm" (ngSubmit)="guardarCambios()">
+        <label>Nombre:</label>
+        <input formControlName="Nombre" />
+        <label>Apellido:</label>
+        <input formControlName="Apellido" />
+        <label>Correo electrónico:</label>
+        <input formControlName="CorreoElectronico" />
+        <label>Teléfono:</label>
+        <input formControlName="Telefono" />
+        <label>Ciudad:</label>
+        <input formControlName="Ciudad" />
+        <label>Departamento:</label>
+        <input formControlName="Departamento" />
+        <label>País:</label>
+        <input formControlName="Pais" />
+        <div class="botones-acciones">
+          <button type="submit">💾 Guardar</button>
+          <button type="button" (click)="cerrarModal()">❌ Cancelar</button>
+        </div>
+      </form>
+    </div>
   </div>
 </div>

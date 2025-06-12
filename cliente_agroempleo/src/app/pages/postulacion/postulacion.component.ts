@@ -31,6 +31,7 @@ import { UserHeaderComponent } from "../components/user-header/user-header.compo
 })
 export class PostulacionComponent {
  postulacionForm!: FormGroup;
+  Id_usuarios = localStorage.getItem('usuarioId') || '';
  
 
   constructor(private fb: FormBuilder, private http: HttpClient ) {
@@ -69,7 +70,9 @@ export class PostulacionComponent {
       },
       IdtipoempleoTipodeempleo: {
         Id: Number(form.IdtipoempleoTipodeempleo)
-      }
+      },
+      Id_usuarios: Number(this.Id_usuarios)
+
     };
 
     console.log('Enviando datos:', datos);

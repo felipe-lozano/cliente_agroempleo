@@ -11,7 +11,9 @@
       <ul class="listMenu" [class.open]="isMenuOpen">
         <li><a routerLink="/home">Inicio</a></li>
         <li><a routerLink="/biblioteca">Búsqueda de empleo</a></li>
-        <li><a routerLink="/postulacion">Nueva vacante</a></li>
+        <li><a routerLink="/postulacion"> Nueva vacante</a></li>
+        <li><a routerLink="/learning">Aprende...</a></li>
+
       </ul>
       <button class="mobileMenuButton" (click)="toggleMenu()">
         <span></span>
@@ -22,6 +24,15 @@
     <div class="user-profile">
       <a  routerLink="/perfil">{{ Nombre }}</a>
       <img [src]="avatarUrl" alt="Usuario" class="avatar" />
+      <!-- Si hay sesión iniciada -->
+      <button *ngIf="sesionIniciada" (click)="cerrarSesion()" class="btn btn-danger">
+        Cerrar sesión
+      </button>
+
+      <!-- Si NO hay sesión iniciada -->
+      <button *ngIf="!sesionIniciada" (click)="irAIniciarSesion()" class="btn btn-primary">
+        Iniciar sesión
+      </button>
     </div>
   </div>
 </header>

@@ -1,11 +1,13 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { UsuarioService } from '../../../../usuario.service';
 
 @Component({
   selector: 'app-user-header',
   imports: [
-    RouterModule
+    RouterModule,
+    CommonModule
   ],
   templateUrl: './user-header.component.html',
   styleUrl: './user-header.component.css'
@@ -14,6 +16,8 @@ export class UserHeaderComponent {
   isMenuOpen = false;
   Nombre: string = '';
   avatarUrl: string = '/img.png';
+  tipoUsuario: string = localStorage.getItem('usuarioTipo') || '';
+
 
   toggleMenu() {
     this.isMenuOpen = !this.isMenuOpen;
@@ -22,15 +26,26 @@ export class UserHeaderComponent {
   constructor(private usuarioService: UsuarioService) {}
 
   ngOnInit(): void {
-    const usuarioId: number = 24;
-    console.log("ngOnInit cargado");
+    const nombre = localStorage.getItem('usuarioNombre') || '';
+    const apellido = localStorage.getItem('usuarioApellido') || '';
+    this.Nombre = `${nombre} ${apellido}`.trim();
+    const usuarioId = localStorage.getItem('usuarioId');
 
-    this.usuarioService.obtenerUsuario(usuarioId).subscribe(usuario => {
-    console.log("Usuario obtenido:", usuario);
-    this.Nombre = usuario["Consulta de id"].Nombre;
-    this.avatarUrl = usuario.avatar || '/img.png';
-    console.log("Nombre:", this.Nombre);
-    });
+    console.log("ngOnInit cargado", usuarioId);
+    console.log("ngOnInit cargado", this.Nombre);
+
+
   }
+  get sesionIniciada(): boolean {
+  return !!localStorage.getItem('usuarioId'); // Cambiado a 'usuarioId'
 }
 
+  cerrarSesion() {
+    localStorage.clear(); // Limpia todo el localStorage
+    window.location.href = '/'; // Redirige a home o login
+  }
+
+  irAIniciarSesion() {
+    window.location.href = '/login'; // Redirige a login
+  }
+}

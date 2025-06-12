@@ -13,6 +13,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
+import { UserHeaderComponent } from "../components/user-header/user-header.component";
 
 @Pipe({
   name: 'filtroCursos',
@@ -48,8 +49,9 @@ export class FiltroCursosPipe implements PipeTransform {
     MatInputModule,
     MatSelectModule,
     FiltroCursosPipe,
-    MatTableModule
-  ],
+    MatTableModule,
+    UserHeaderComponent
+],
   templateUrl: './learning.component.html',
   styleUrl: './learning.component.css'
 })

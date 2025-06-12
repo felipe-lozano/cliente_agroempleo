@@ -1,13 +1,11 @@
-
-import {Component, Output, EventEmitter } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatDialog, MatDialogModule, } from '@angular/material/dialog';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { EmpleoService } from '../../../empleo.service';
 import { UsuarioService } from '../../../usuario.service';
 import { UserHeaderComponent } from "../components/user-header/user-header.component";
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 
 interface OfertaLaboral {
   id: number;
@@ -31,15 +29,13 @@ interface OfertaLaboral {
     FormsModule,
     RouterModule,
     UserHeaderComponent,
-    
-    
-],
+  ],
   templateUrl: './biblioteca.component.html',
-  styleUrl: './biblioteca.component.css'
+  styleUrls: ['./biblioteca.component.css']
 })
 export class BibliotecaComponent {
   isMenuOpen = false;
-  IdUsuarios = 7;
+  IdUsuarios: number = parseInt(localStorage.getItem('usuarioId') || '0', 10);
   archivoPDF: File | null = null;
   base64CV: string | null = null;
 
@@ -51,20 +47,23 @@ export class BibliotecaComponent {
 
   ofertas: OfertaLaboral[] = [];
 
-  constructor(private empleoService: EmpleoService, private usuarioService: UsuarioService, private http: HttpClient) {}
+  constructor(
+    private empleoService: EmpleoService,
+    private usuarioService: UsuarioService,
+    private http: HttpClient
+  ) {}
 
-  ngOnInit ()  {
+  ngOnInit() {
     this.empleoService.obtenerOfertas().subscribe((data: any) => {
       const arregloConsulta: OfertaLaboral[] = data["Data"];
       this.ofertas = arregloConsulta;
       console.log(JSON.stringify(this.ofertas, null, 2));
     });
-
-
-   
   }
 
   get ofertasFiltradas(): OfertaLaboral[] {
+    if (!this.ofertas) return []; // Previene el error si ofertas es null o undefined
+
     return this.ofertas.filter(oferta => {
       const coincideBusqueda =
         oferta.TituloPuesto.toLowerCase().includes(this.terminoBusqueda.toLowerCase()) ||
@@ -77,9 +76,8 @@ export class BibliotecaComponent {
 
       return coincideBusqueda && coincideExperiencia && coincideContrato && coincideJornada && coincideModalidad;
     });
-
-    
   }
+
 
   experiencias: string[] = ['Todas', 'Junior', 'Intermedio', 'Senior'];
   tiposContrato: string[] = ['Todos', 'Indefinido', 'Temporal', 'Freelance'];
@@ -88,7 +86,6 @@ export class BibliotecaComponent {
 
   modalAbierto = false;
   ofertaSeleccionada: any = null;
-
 
   abrirModal(oferta: any) {
     this.ofertaSeleccionada = oferta;
@@ -100,7 +97,6 @@ export class BibliotecaComponent {
     this.ofertaSeleccionada = null;
   }
 
-  
   onFileSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
 
@@ -122,36 +118,63 @@ export class BibliotecaComponent {
     }
   }
 
-  Postularme() {
-    if (!this.base64CV || !this.ofertaSeleccionada) {
-      alert('Por favor, selecciona un archivo PDF antes de postularte.');
-      return;
-    }
-
-    const payload = {
-      IdUsuarios: this.IdUsuarios,
-      IdEmpleo: this.ofertaSeleccionada.id,
-      SoporteCv: this.base64CV
-    };
-
-
-
-    console.log('JSON a enviar:', payload);
-    
-    const json_register = JSON.stringify(payload);
-    console.log('JSON formateado:\n', json_register);
-
-    this.http.post('http://localhost:8087/v1/postulaciones', payload).subscribe({
-      next: (res) => {
-        alert('¡Postulación con base64 exitosa!');
-        this.cerrarModal();
-      },
-      error: (err) => {
-        console.error('Error al postularse:', err);
-        alert('Ocurrió un error al postularse.');
-      }
-    });
+Postularme() {
+  if (!this.base64CV || !this.ofertaSeleccionada) {
+    alert('Por favor, selecciona un archivo PDF antes de postularte.');
+    return;
   }
 
+  const IdUsuarios = this.IdUsuarios;
+  const IdEmpleo = this.ofertaSeleccionada.id;
+
+  const params = new HttpParams()
+    .set('id_usuario', IdUsuarios.toString())
+    .set('id_empleo', IdEmpleo.toString());
+
+  this.http.get<any>('http://localhost:8087/v1/postulaciones', { params })
+    .subscribe({
+      next: (res) => {
+        console.log('Respuesta del backend:', res);
+
+        let postulaciones = [];
+        if (res && Array.isArray(res["usuarios consultados"])) {
+          postulaciones = res["usuarios consultados"];
+        } else {
+          console.warn('Respuesta inesperada, no se encontró "usuarios consultados"');
+          postulaciones = [];
+        }
+
+        // Filtrar postulaciones por vacante y por usuario
+        const postulacionesParaEstaVacante = postulaciones.filter(p =>
+          p.IdEmpleo === IdEmpleo && p.IdUsuarios === IdUsuarios
+        );
+
+        if (postulacionesParaEstaVacante.length > 0) {
+          alert('Ya te has postulado a esta vacante.');
+        } else {
+          const payload = {
+            IdUsuarios: IdUsuarios,
+            IdEmpleo: IdEmpleo,
+            SoporteCv: this.base64CV
+          };
+
+          this.http.post('http://localhost:8087/v1/postulaciones', payload).subscribe({
+            next: () => {
+              alert('¡Postulación enviada con éxito!');
+              this.cerrarModal();
+            },
+            error: (err) => {
+              console.error('Error al postularse:', err);
+              alert('Ocurrió un error al postularse.');
+            }
+          });
+        }
+      },
+      error: (err) => {
+        console.error('Error al verificar postulación previa:', err);
+        alert('Error al verificar postulación previa.');
+      }
+    });
+}
 
 }

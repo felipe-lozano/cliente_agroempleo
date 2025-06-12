@@ -1,143 +1,175 @@
-body {
-    font-family: 'Arial', sans-serif;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    min-height: 100vh;
-    overflow-y: auto;
-    padding-top: 90px;
-    padding-bottom: 80px;
-    background-image: url('/fondo_login.png'); /* Ruta a la imagen */
-    background-size: cover; /* Ajusta la imagen para que cubra todo el fondo */
-    background-position: center; /* Centra la imagen */
-    background-repeat: no-repeat; /* Evita que la imagen se repita */
+/* Fondo principal */
+.login-container {
+  background: url('/fondo_login.png') no-repeat center center;
+  background-size: cover;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 16px;
 }
 
-.login-form {
-    background-color: rgba(28, 28, 28, 0.5); /* Fondo oscuro con transparencia */
-    padding: 20px;
-    border-radius: 8px; /* opcional */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Agregado para efecto de profundidad */
-    width: 100%;
-    max-width: 400px;
+/* Tarjeta de login */
+.login-card {
+  width: 100%;
+  max-width: 400px;
+  padding: 40px 20px 30px;
+  text-align: center;
+  background:rgba(252, 250, 250, 0.762);
+  border-radius: 12px;
+  position: relative;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
 }
 
-.login-form h2 {
-    text-align: center;
-    margin-bottom: 1rem;
-    color: #eea913; /* Verde claro */
+
+/* Títulos */
+.title {
+  margin-top: 60px;
+  font-size: 24px;
+  font-weight: bold;
+  color: #7B1F30;
 }
 
-.input-group {
-    margin-bottom: 1rem;
+.subtitle {
+  font-size: 14px;
+  color: #7B1F30;
+  margin-bottom: 20px;
 }
 
-label {
-    display: block;
-    margin-bottom: 0.5rem;
-    color: #ffffff; /* Etiquetas blancas */
+/* Formularios */
+.mat-form-field {
+  width: 100%;
+  margin-bottom: 16px;
 }
 
-input[type="email"],
-input[type="password"],
-input[type="text"] {
-    width: 100%; /* Asegura que los campos ocupen todo el ancho del contenedor */
-    padding: 0.5rem;
-    border: 1px solid #eea913; /* Borde verde claro */
-    border-radius: 4px;
-    background-color: #2b2b2b; /* Fondo de los campos */
-    color: #ffffff; /* Texto blanco */
-    font-size: 1rem;
-    outline: none;
-    transition: border-color 0.3s ease-in-out;
-    box-sizing: border-box; /* Asegura que el padding no afecte el ancho */
+.full-width {
+  width: 100%;
 }
 
-/* Mantener el estilo del campo al mostrar u ocultar la contraseña */
-input[type="password"].show-password,
-input[type="text"].show-password {
-    border: 1px solid #eea913; /* Reafirma el borde */
-    background-color: #2b2b2b; /* Reafirma el fondo */
-    color: #ffffff; /* Reafirma el color de texto */
-    -webkit-text-security: none; /* Permite mostrar el texto sin estilo de campo */
+/* Opciones (recordar y olvidar) */
+.options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+  margin: 10px 0;
+  color: #444;
 }
 
-/* Estilo de enfoque */
-input[type="email"]:focus,
-input[type="password"]:focus,
-input[type="text"]:focus {
-    border-color: #eea913; /* Borde verde más claro al enfocar */
+/* Botones */
+.actions {
+  margin-top: 20px;
 }
 
-.password-group {
-    position: relative;
+.submit-btn {
+  width: 100%;
+  padding: 10px;
+  font-weight: bold;
+  background-color: white;
+  color: #7B1F30;
+  border: 2px solid #7B1F30;
+  transition: 0.3s ease;
+  border-radius: 60px;
 }
 
-.eye-icon {
-    position: absolute;
-    right: 10px; /* Ajusta según sea necesario */
-    top: 50%;
-    transform: translateY(-50%);
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 0;
+.submit-btn:hover {
+  background-color: #7B1F30;
+  color: white;
 }
 
-.eye-icon i {
-    color: #ffffff; /* Color del ícono */
-    font-size: 1.2rem;
-}
-.eye-icon i:hover{
-    color: #eea913;
-}
-.checkbox-group {
-    margin-bottom: 1rem;
-    color: #e0e0e0; /* Texto en los checkbox */
-}
-
-.forgot-password {
-    display: block;
-    text-align: right;
-    margin-bottom: 1rem;
-    color: #eea913; /* Link verde claro */
-    text-decoration: none;
+button {
+  font-weight: bold;
+  font-size: 16px;
+  border: none;
+  border-radius: 30px;
+  padding: 12px 24px;
+  margin-top: 10px;
+  width: 100%;
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
 }
 
-.forgot-password:hover {
-    text-decoration: underline;
-    color: #ac780a; /* Hover verde más claro */
+/* Botón de Iniciar Sesión */
+button.iniciar {
+  background: linear-gradient(to right, #d32f2f, #c2185b);
+  color: white;
+  box-shadow: 0 4px 8px rgba(210, 47, 47, 0.3);
 }
 
-.login-btn {
-    width: 100%;
-    padding: 0.5rem;
-    background-color: #ac780a; /* Botón verde claro */
-    color: #ffffff;
-    border: none;
-    border-radius: 4px;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease-in-out;
+button.iniciar:hover {
+  background: linear-gradient(to right, #b71c1c, #880e4f);
+  transform: scale(1.03);
 }
 
-.login-btn:hover {
-    background-color: #eea913; /* Verde más oscuro al pasar */
-}
-.register-link {
-    text-align: center;
-    margin-top: 1rem;
-    color: #ffffff; /* Texto blanco */
+/* Botón de Cuenta Nueva */
+button.registro {
+  background: linear-gradient(to right, #f06292, #ab47bc);
+  color: white;
+  box-shadow: 0 4px 8px rgba(160, 32, 240, 0.3);
 }
 
-.register-link a {
-    color: #eea913; /* Enlace verde claro */
-    text-decoration: none;
+button.registro:hover {
+  background: linear-gradient(to right, #ec407a, #8e24aa);
+  transform: scale(1.03);
+}
+.olvidaste-contrasena {
+  font-size: 14px;
+  font-weight: 600;
+  color: #c2185b;
+  text-decoration: none;
+  transition: color 0.3s ease, transform 0.3s ease;
 }
 
-.register-link a:hover {
-    text-decoration: underline;
-    color: #ac780a; /* Hover verde más claro */
+.olvidaste-contrasena:hover {
+  color: #880e4f;
+  transform: scale(1.05);
+  text-decoration: underline;
+}
+/* Mensaje de error */
+.error-message {
+  color: red;
+  font-size: 13px;
+  margin-top: 8px;
+}
+.logo-animado {
+  font-size: 28px;
+  font-weight: bold;
+  background: linear-gradient(90deg, #151515, #c20202, #e65d08);
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: logoGradient 5s ease infinite;
+  cursor: pointer;
+  transition: transform 0.3s ease, text-shadow 0.3s ease;
+}
+
+.logo-animado:hover {
+  transform: scale(1.05);
+  text-shadow: 0 0 10px rgba(200, 50, 50, 0.5);
+}
+
+@keyframes logoGradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.error {
+  color: red;
+  margin-top: 10px;
+  font-weight: 500;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.actions {
+  margin-top: 15px;
+}
+
+.options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }

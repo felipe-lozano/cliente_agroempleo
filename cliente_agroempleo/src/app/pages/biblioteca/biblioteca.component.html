@@ -61,14 +61,14 @@
         <p><strong>Publicado por:</strong> {{ ofertaSeleccionada?.publicado_por }}</p>
 
         <!-- Input para subir archivo PDF -->
-        <label for="cvUpload" class="custom-file-upload">
-        <strong>Sube tu CV en PDF:</strong>
+        <label  *ngIf="tipoUsuario === 'Aspirante'" for="cvUpload" class="custom-file-upload">
+        <strong> Sube tu CV en PDF:</strong>
         </label>
         <input type="file" id="cvUpload" (change)="onFileSelected($event)" accept="application/pdf" />
 
-    
-        <button class="ver-btn"(click)="cerrarModal()">Cerrar</button>
-        <button class="ver-btn" (click)="Postularme()">Postularme</button>
+  
+        <button  class="ver-btn"(click)="cerrarModal()">Cerrar</button>
+        <button *ngIf="tipoUsuario === 'Aspirante'" class="ver-btn" (click)="Postularme()">Postularme</button>
 
       </div>
     </div>

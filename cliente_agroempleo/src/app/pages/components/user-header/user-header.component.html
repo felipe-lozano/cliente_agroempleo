@@ -11,7 +11,9 @@
       <ul class="listMenu" [class.open]="isMenuOpen">
         <li><a routerLink="/home">Inicio</a></li>
         <li><a routerLink="/biblioteca">Búsqueda de empleo</a></li>
-        <li><a routerLink="/postulacion"> Nueva vacante</a></li>
+        <li *ngIf="tipoUsuario === 'Empleador'">
+          <a routerLink="/postulacion">Nueva vacante</a>
+        </li>
         <li><a routerLink="/learning">Aprende...</a></li>
 
       </ul>

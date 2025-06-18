@@ -4,6 +4,9 @@ import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { UserHeaderComponent } from "../components/user-header/user-header.component";
+import { forkJoin } from 'rxjs';
+
+
 
 interface UserProfile {
   Id: number;
@@ -124,13 +127,14 @@ export class PerfilComponent implements OnInit {
           const rol = this.user.IdRolRol?.Nombre;
 
           if (rol === 'Empleador') {
-            const vacantesMap = new Map<string, { TituloPuesto: string, postulantes: any[] }>();
+            const vacantesMap = new Map<string, { TituloPuesto: string, IdEmpleo: number, postulantes: any[] }>();
 
             this.postulaciones.forEach(p => {
               if (p.IdEmpleador === idUsuario) {
                 if (!vacantesMap.has(p.TituloPuesto)) {
                   vacantesMap.set(p.TituloPuesto, {
                     TituloPuesto: p.TituloPuesto,
+                    IdEmpleo: p.IdEmpleo, // NECESARIO para eliminar luego
                     postulantes: []
                   });
                 }
@@ -147,7 +151,7 @@ export class PerfilComponent implements OnInit {
             this.postulacionesFiltradas = this.postulaciones.filter(p =>
               p.IdAspirante === idUsuario
             ).map(p => ({
-              Id: p.Id, // <- necesario para eliminar
+              Id: p.Id,
               TituloPuesto: p.TituloPuesto,
               NombrePostulado1: p.NombrePostulado1
             }));
@@ -309,26 +313,54 @@ export class PerfilComponent implements OnInit {
     this.modalVacantesAbiertas = false;
   }
   eliminarVacante(Id: number | undefined) {
-    if (!Id) return;
+  if (!Id) return;
 
-    const consultaUrl = `http://localhost:8087/v1/postulaciones?IdEmpleo=${Id}`;
-    console.log('🔍 Consultando postulaciones en:', consultaUrl);
+  const consultaUrl = `http://localhost:8087/v1/postulaciones?query=IdEmpleo:${Id}`;
+  console.log('🔍 Consultando postulaciones en:', consultaUrl);
 
-    this.http.get<any>(consultaUrl).subscribe({
-      next: (respuesta) => {
-        console.log('📄 Respuesta de la API:', respuesta);
+  this.http.get<any>(consultaUrl).subscribe({
+    next: (respuesta) => {
+      const postulaciones = respuesta["usuarios consultados"];
 
-        const postulaciones = respuesta["usuarios consultados"];
+      if (postulaciones && postulaciones.length > 0) {
+        const confirmado = confirm(`❌ Esta vacante tiene ${postulaciones.length} postulaciones activas.\n¿Deseas eliminar todas las postulaciones y luego la vacante?`);
+        if (!confirmado) return;
 
-        if (postulaciones && postulaciones.length > 0) {
-          alert('❌ No se puede eliminar esta vacante porque tiene postulaciones activas.');
-          return; // 🚫 Detiene el flujo
-        }
+        // 🔁 Crear un array de peticiones DELETE para cada postulación
+        const eliminarPostulaciones$ = postulaciones.map((postulacion: any) => {
+          const idPostulacion = postulacion.Id;
+          const url = `http://localhost:8087/v1/postulaciones/${idPostulacion}`;
+          console.log(`🗑️ Eliminando postulación ID ${idPostulacion}...`);
+          return this.http.delete(url);
+        });
 
+        // 🧨 Ejecutar todas las eliminaciones y luego borrar la vacante
+        forkJoin(eliminarPostulaciones$).subscribe({
+          next: () => {
+            console.log('✅ Todas las postulaciones eliminadas.');
+            // 🔄 Ahora eliminar la vacante
+            this.http.delete(`${this.apiEliminarVacanteUrl}/${Id}`).subscribe({
+              next: () => {
+                alert('✅ Vacante y postulaciones eliminadas exitosamente.');
+                this.obtenerVacantes();
+                this.cerrarModalDetalleVacante();
+              },
+              error: (err) => {
+                console.error('❌ Error al eliminar la vacante:', err);
+                alert('Ocurrió un error al eliminar la vacante.');
+              }
+            });
+          },
+          error: (err) => {
+            console.error('❌ Error al eliminar postulaciones:', err);
+            alert('Ocurrió un error al eliminar las postulaciones. La vacante no fue eliminada.');
+          }
+        });
+
+      } else {
         const confirmado = confirm('¿Deseas eliminar esta vacante? Esta acción la eliminará del sistema.');
         if (!confirmado) return;
 
-        // ✅ Ejecutar eliminación
         this.http.delete(`${this.apiEliminarVacanteUrl}/${Id}`).subscribe({
           next: () => {
             alert('✅ Vacante eliminada exitosamente.');
@@ -340,13 +372,14 @@ export class PerfilComponent implements OnInit {
             alert('Ocurrió un error al eliminar la vacante.');
           }
         });
-      },
-      error: (err) => {
-        console.error('❌ Error al consultar postulaciones:', err);
-        alert('No se pudo verificar si hay postulaciones asociadas.');
       }
-    });
-  }
+    },
+    error: (err) => {
+      console.error('❌ Error al consultar postulaciones:', err);
+      alert('No se pudo verificar si hay postulaciones asociadas.');
+    }
+  });
+}
   terminarVacante(Id: number | undefined) {
     if (!Id) return;
     const confirmado = confirm('¿Deseas marcar esta vacante como terminada? Esta acción la eliminará del sistema.');
@@ -364,46 +397,5 @@ export class PerfilComponent implements OnInit {
       }
     });
   }
-  eliminarPostulacionesDeVacante(Id: number) {
-  const urlConsulta = `http://localhost:8087/v1/postulaciones?IdEmpleo=${Id}`;
-
-  this.http.get<any>(urlConsulta).subscribe({
-    next: (respuesta) => {
-      const postulaciones = respuesta["usuarios consultados"];
-      
-      if (!postulaciones || postulaciones.length === 0) {
-        alert('No hay postulaciones asociadas a esta vacante.');
-        return;
-      }
-
-      const confirmacion = confirm(`Se encontraron ${postulaciones.length} postulaciones asociadas. ¿Deseas eliminarlas todas?`);
-      if (!confirmacion) return;
-
-      // Eliminar todas las postulaciones una por una
-      let eliminadas = 0;
-      postulaciones.forEach((postulacion: any, index: number) => {
-        const idPostulacion = postulacion.Id;
-
-        this.http.delete(`${this.apiDeletePostulacionUrl}/${idPostulacion}`).subscribe({
-          next: () => {
-            eliminadas++;
-            // Si es la última, notificar
-            if (eliminadas === postulaciones.length) {
-              alert(`✅ Se eliminaron ${eliminadas} postulaciones.`);
-              this.obtenerPostulaciones();
-            }
-          },
-          error: (err) => {
-            console.error(`❌ Error al eliminar postulación con ID ${idPostulacion}:`, err);
-          }
-        });
-      });
-    },
-    error: (err) => {
-      console.error('❌ Error al consultar postulaciones asociadas:', err);
-      alert('Ocurrió un error al consultar las postulaciones.');
-    }
-  });
-}
 
 }

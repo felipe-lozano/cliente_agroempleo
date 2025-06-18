@@ -52,6 +52,17 @@ export class BibliotecaComponent {
     private usuarioService: UsuarioService,
     private http: HttpClient
   ) {}
+  tipoUsuario: string = ''; // 'Empleador', 'Aspirante', etc.
+
+// Puedes inicializarla desde el almacenamiento local, un servicio o lo que estés usando
+  rol() {
+    const tipo = localStorage.getItem('usuarioTipo');
+    try {
+      this.tipoUsuario = JSON.parse(tipo!); // Elimina las comillas dobles si están
+    } catch {
+      this.tipoUsuario = tipo ?? '';
+    }
+  }
 
   ngOnInit() {
     this.empleoService.obtenerOfertas().subscribe((data: any) => {
@@ -59,6 +70,7 @@ export class BibliotecaComponent {
       this.ofertas = arregloConsulta;
       console.log(JSON.stringify(this.ofertas, null, 2));
     });
+    this.rol();
   }
 
   get ofertasFiltradas(): OfertaLaboral[] {

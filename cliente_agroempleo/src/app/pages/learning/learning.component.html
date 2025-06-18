@@ -1,89 +1,59 @@
 <app-user-header></app-user-header>
+<div class="container">
+  <h1 class="title">Cursos recomendados</h1>
 
-<mat-sidenav-container class="sidenav-container">
-  
-<a mat-list-item routerLink="/home" routerLinkActive="active-link">Inicio</a>
+  <mat-form-field appearance="outline" class="search-bar">
+    <mat-label>Buscar curso</mat-label>
+    <input matInput [(ngModel)]="searchText" (input)="filterLearnings()" placeholder="Ej: Excel, Inglés, etc.">
+    <button mat-icon-button *ngIf="searchText" matSuffix (click)="searchText=''; filterLearnings()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-form-field>
 
-  <mat-sidenav-content>
-    <div class="welcome-section">
-      <h1>{{ usuario }}, mejora tus aptitudes y avanza en tu carrera con Agroempleo Learning</h1>
-    </div>
-  
-    <div class="selection-buttons">
-      <mat-form-field appearance="fill">
-        <mat-label>Cursos</mat-label>
-        <mat-select [(ngModel)]="filtroCurso">
-          <mat-option value="">Todos</mat-option>
-          <mat-option value="Excel">Excel</mat-option>
-          <mat-option value="Inglés">Inglés</mat-option>
-          <mat-option value="Angular">Angular</mat-option>
-        </mat-select>
-      </mat-form-field>
+  <button *ngIf="tipoUsuario === 'Empleador'" mat-raised-button color="primary" (click)="abrirModal()">+ Nuevo Learning</button>
 
-      <mat-form-field appearance="fill">
-        <mat-label>Nivel</mat-label>
-        <mat-select [(ngModel)]="filtroNivel">
-          <mat-option value="">Todos</mat-option>
-          <mat-option value="Basico">Básico</mat-option>
-          <mat-option value="Intermedio">Intermedio</mat-option>
-          <mat-option value="Avanzado">Avanzado</mat-option>
-        </mat-select>
-      </mat-form-field>
-
-      <mat-form-field appearance="fill">
-        <mat-label>Tiempo</mat-label>
-        <mat-select [(ngModel)]="filtroTiempo">
-          <mat-option value="">Todos</mat-option>
-          <mat-option value="min">Menos de 30 Minutos</mat-option>
-          <mat-option value="min">30-60 Minutos</mat-option>
-          <mat-option value="1a3">1-3 Horas</mat-option>
-          <mat-option value="mas3">Más de 3 horas</mat-option>
-        </mat-select>
-      </mat-form-field>
-
-
-
-      <mat-form-field appearance="fill">
-        <mat-label>Favoritos</mat-label>
-        <mat-select [(ngModel)]="filtroFavoritos">
-          <mat-option value="">Todos</mat-option>
-          <mat-option value="Sí">Sí</mat-option>
-          <mat-option value="No">No</mat-option>
-        </mat-select>
-      </mat-form-field>
-    </div>
-    <div class="course-recommendations">
-      <h2>Principales recomendaciones para {{ usuario }}</h2>
-
-      <div class="carousel-wrapper">
-        <div class="carousel">
-          <mat-card
-            *ngFor="let curso of recomendaciones | filtroCursos:filtroCurso:filtroNivel:filtroTiempo:filtroExtra:filtroFavoritos"
-            class="course-card"
-          >
-            <video
-              [src]="curso.videoUrl"
-              muted
-              (mouseenter)="playVideo($event)"
-              (mouseleave)="pauseVideo($event)"
-              class="video-hover"
-            ></video>
-            <mat-card-title>{{ curso.titulo }}</mat-card-title>
-            <mat-card-subtitle>Por: {{ curso.autor }}</mat-card-subtitle>
-            <p>Duración: {{ curso.duracion }}</p>
-            <button
-              mat-icon-button
-              (click)="toggleFavorito(curso)"
-              [color]="curso.favorito ? 'warn' : 'default'"
-              aria-label="Favorito"
-            >
-              <mat-icon>{{ curso.favorito ? 'favorite' : 'favorite_border' }}</mat-icon>
-            </button>
-          </mat-card>
+  <div class="card-grid">
+    <mat-card *ngFor="let learning of filteredLearnings" class="learning-card">
+      <img mat-card-image [src]="learning.Imagenes || 'https://via.placeholder.com/300x180'" alt="Imagen del curso">
+      <mat-card-content>
+        <h3>{{ learning.TextoAprendizaje }}</h3>
+        <div *ngIf="learning.Videos">
+          <p><strong>Video:</strong></p>
+          <iframe
+            width="100%"
+            height="200"
+            [src]="learning.Videos | safeUrl"
+            frameborder="0"
+            allowfullscreen>
+          </iframe>
         </div>
-      </div>
-    </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
 
-   
-  </mat-sidenav-content>
-</mat-sidenav-container>
+  <!-- Modal -->
+  <div class="modal-backdrop" *ngIf="showModal">
+    <div class="modal">
+      <h2>Nuevo Learning</h2>
+      <form [formGroup]="newLearningForm" (ngSubmit)="guardarLearning()">
+        <mat-form-field appearance="fill">
+          <mat-label>Texto del aprendizaje</mat-label>
+          <input matInput formControlName="TextoAprendizaje" required>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>URL del video</mat-label>
+          <input matInput formControlName="Videos">
+        </mat-form-field>
+
+        <label for="imagen">Seleccionar imagen</label>
+        <input type="file" accept="image/*" (change)="onImageSelected($event)">
+
+        <div class="actions">
+          <button mat-raised-button color="primary" type="submit">Guardar</button>
+          <button mat-button type="button" (click)="cerrarModal()">Cancelar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

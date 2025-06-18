@@ -88,7 +88,6 @@
               <div class="botones-acciones">
                 <button *ngIf="postulante.ArchivoCV" (click)="descargarArchivo(postulante.ArchivoCV, postulante.NombrePostulado)">📎 Descargar CV</button>
                 <button *ngIf="postulante.ArchivoCV" (click)="verPdf(postulante.ArchivoCV)">👁️ Ver CV</button>
-                <button (click)="eliminarPostulacionesDeVacante(postulante.Id)">🗑️ Eliminar postulación</button>
 
               </div>
             </div>

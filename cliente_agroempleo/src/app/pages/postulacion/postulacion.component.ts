@@ -11,6 +11,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { UserHeaderComponent } from "../components/user-header/user-header.component";
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-postulacion',
@@ -24,7 +25,8 @@ import { UserHeaderComponent } from "../components/user-header/user-header.compo
     MatButtonModule,
     MatIconModule,
     MatCardModule,
-    UserHeaderComponent
+    UserHeaderComponent,
+    
 ],
   templateUrl: './postulacion.component.html',
   styleUrl: './postulacion.component.css'
@@ -34,7 +36,7 @@ export class PostulacionComponent {
   Id_usuarios = localStorage.getItem('usuarioId') || '';
  
 
-  constructor(private fb: FormBuilder, private http: HttpClient ) {
+  constructor(private fb: FormBuilder, private http: HttpClient, private router: Router ) {
    this.postulacionForm = this.fb.group({
     TituloPuesto: ['', Validators.required],
     Cargo: ['', Validators.required],
@@ -85,6 +87,8 @@ export class PostulacionComponent {
       err => console.error('❌ Error al enviar', err)
     );
     }
+    this.router.navigate(['/biblioteca']);
   }
+ 
 }
 
